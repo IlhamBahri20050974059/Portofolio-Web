@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>🔢 Tebak Angka</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .container {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    input[type="number"] {
+      padding: 10px;
+      width: 60%;
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-right: 5px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    table {
+      width: 100%;
+      margin-top: 15px;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    th {
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔢 Tebak Angka</h1>
+  <div class="container">
+    <p>Klik start untuk memulai permainan.</p>
+    <button onclick="startGame()">Start</button>
+    <input type="number" id="guessInput" placeholder="Tebakan kamu..." disabled />
+    <br>
+    <button onclick="checkGuess()" id="guessBtn" disabled>Tebak</button>
+    <p id="message"></p>
+    
+    <table id="historyTable" style="display: none;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tebakan</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    let secretNumber = 0;
+    let attempts = 0;
+    const maxAttempts = 5;
+    let gameActive = false;
+
+    function startGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      gameActive = true;
+
+      document.getElementById("guessInput").disabled = false;
+      document.getElementById("guessBtn").disabled = false;
+      document.getElementById("guessInput").value = "";
+      document.getElementById("message").textContent = "";
+      document.querySelector("#historyTable tbody").innerHTML = "";
+      document.getElementById("historyTable").style.display = "table";
+    }
+
+    function checkGuess() {
+      if (!gameActive) return;
+
+      const guess = Number(document.getElementById("guessInput").value);
+      const message = document.getElementById("message");
+
+      if (!guess || guess < 1 || guess > 100) {
+        message.textContent = "Masukkan angka antara 1 hingga 100.";
+        return;
+      }
+
+      attempts++;
+
+      const row = document.createElement("tr");
+      const attemptCell = document.createElement("td");
+      const guessCell = document.createElement("td");
+      const statusCell = document.createElement("td");
+
+      attemptCell.textContent = attempts;
+      guessCell.textContent = guess;
+
+      if (guess === secretNumber) {
+        statusCell.textContent = "✅ Benar!";
+        message.textContent = `🎉 Kamu berhasil menebak dalam ${attempts} percobaan!`;
+        endGame();
+      } else if (guess < secretNumber) {
+        statusCell.textContent = "🔼 Terlalu rendah";
+        message.textContent = "Tebakanmu terlalu rendah.";
+      } else {
+        statusCell.textContent = "🔽 Terlalu tinggi";
+        message.textContent = "Tebakanmu terlalu tinggi.";
+      }
+
+      row.appendChild(attemptCell);
+      row.appendChild(guessCell);
+      row.appendChild(statusCell);
+      document.querySelector("#historyTable tbody").appendChild(row);
+
+      if (attempts >= maxAttempts && guess !== secretNumber) {
+        message.textContent = `❌ Kamu gagal menebak dalam ${maxAttempts} percobaan. Jawabannya adalah ${secretNumber}.`;
+        endGame();
+      }
+
+      document.getElementById("guessInput").value = "";
+    }
+
+    function endGame() {
+      gameActive = false;
+      document.getElementById("guessInput").disabled = true;
+      document.getElementById("guessBtn").disabled = true;
+    }
+  </script>
+</body>
+</html>

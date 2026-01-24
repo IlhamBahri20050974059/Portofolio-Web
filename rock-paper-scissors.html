@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Gunting Batu Kertas</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f7f7f7;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .hands-area {
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      margin: 30px 0;
+    }
+
+    .hand {
+      min-height: 70px;
+    }
+
+    .bot {
+      color: #c0392b;
+    }
+
+    .player {
+      color: #2980b9;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button.choice {
+      font-size: 24px;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .result {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    .score {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .reset-btn {
+      margin-top: 20px;
+      padding: 8px 16px;
+      font-size: 16px;
+      background: #c0392b;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .reset-btn:hover {
+      background: #a93226;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>✊✋✌️ Gunting Batu Kertas</h1>
+
+  <div class="hands-area">
+    <div class="hand bot" id="botHand">✊</div>
+    <div class="hand player" id="playerHand">✊</div>
+  </div>
+
+  <div class="buttons">
+    <button class="choice" onclick="play('gunting')">✌️ Gunting</button>
+    <button class="choice" onclick="play('batu')">✊ Batu</button>
+    <button class="choice" onclick="play('kertas')">✋ Kertas</button>
+  </div>
+
+  <div class="result" id="result">Pilih tangan untuk mulai!</div>
+  <div class="score" id="score">Skor Kamu: 0 | Bot: 0</div>
+  <button class="reset-btn" onclick="resetGame()">Reset Skor</button>
+
+  <script>
+    const choices = ['gunting', 'batu', 'kertas'];
+    const icons = {
+      gunting: '✌️',
+      batu: '✊',
+      kertas: '✋'
+    };
+
+    let playerScore = 0;
+    let botScore = 0;
+
+    let animationInterval;
+
+    function play(playerChoice) {
+      const playerHand = document.getElementById('playerHand');
+      const botHand = document.getElementById('botHand');
+      const resultDiv = document.getElementById('result');
+
+      // Tampilkan pilihan player langsung
+      playerHand.textContent = icons[playerChoice];
+
+      // Acak bot dulu secara cepat
+      let index = 0;
+      clearInterval(animationInterval);
+      animationInterval = setInterval(() => {
+        botHand.textContent = icons[choices[index % 3]];
+        index++;
+      }, 100);
+
+      setTimeout(() => {
+        clearInterval(animationInterval);
+        const botChoice = choices[Math.floor(Math.random() * 3)];
+        botHand.textContent = icons[botChoice];
+
+        let resultText = `Kamu memilih ${playerChoice}, bot memilih ${botChoice}. `;
+
+        if (playerChoice === botChoice) {
+          resultText += 'Hasil: Seri!';
+        } else if (
+          (playerChoice === 'gunting' && botChoice === 'kertas') ||
+          (playerChoice === 'batu' && botChoice === 'gunting') ||
+          (playerChoice === 'kertas' && botChoice === 'batu')
+        ) {
+          resultText += 'Kamu Menang! 🎉';
+          playerScore++;
+        } else {
+          resultText += 'Bot Menang! 😢';
+          botScore++;
+        }
+
+        resultDiv.textContent = resultText;
+        document.getElementById('score').textContent = `Skor Kamu: ${playerScore} | Bot: ${botScore}`;
+      }, 1200); // stop setelah 1.2 detik
+    }
+
+    function resetGame() {
+      playerScore = 0;
+      botScore = 0;
+      document.getElementById('result').textContent = 'Pilih tangan untuk mulai!';
+      document.getElementById('score').textContent = 'Skor Kamu: 0 | Bot: 0';
+      document.getElementById('playerHand').textContent = '✊';
+      document.getElementById('botHand').textContent = '✊';
+    }
+  </script>
+
+</body>
+</html>

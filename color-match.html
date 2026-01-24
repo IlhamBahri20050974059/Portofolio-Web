@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Color Match Game 🎮</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    #colorName {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .color-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .color-box {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .color-box:hover {
+      transform: scale(1.1);
+    }
+    #score {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+    #timer {
+      margin-top: 10px;
+      font-size: 20px;
+      color: #888;
+    }
+    .correct {
+      animation: correctFlash 0.3s;
+    }
+    .wrong {
+      animation: wrongFlash 0.3s;
+    }
+    #startBtn {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-bottom: 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #startBtn:hover {
+      background-color: #2980b9;
+    }
+
+    @keyframes correctFlash {
+      0% { background-color: #2ecc71; }
+      100% { background-color: inherit; }
+    }
+    @keyframes wrongFlash {
+      0% { background-color: #e74c3c; }
+      100% { background-color: inherit; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎮 Color Match</h1>
+  <button id="startBtn">Start Game</button>
+  <div id="colorName"></div>
+
+  <div class="color-grid" id="choices">
+    <!-- Box pilihan warna -->
+  </div>
+
+  <div id="score">Score: 0</div>
+  <div id="timer">Time: 30</div>
+
+  <script>
+    const colors = [
+      { name: 'Red', code: '#e74c3c' },
+      { name: 'Blue', code: '#3498db' },
+      { name: 'Green', code: '#2ecc71' },
+      { name: 'Yellow', code: '#f1c40f' },
+      { name: 'Purple', code: '#9b59b6' },
+      { name: 'Orange', code: '#e67e22' },
+    ];
+
+    const colorNameEl = document.getElementById('colorName');
+    const choicesEl = document.getElementById('choices');
+    const scoreEl = document.getElementById('score');
+    const timerEl = document.getElementById('timer');
+    const startBtn = document.getElementById('startBtn');
+
+    let currentColor = null;
+    let score = 0;
+    let timeLeft = 30;
+    let timer = null;
+
+    function pickColor() {
+      choicesEl.innerHTML = '';
+      const shuffled = [...colors].sort(() => 0.5 - Math.random());
+      const correct = shuffled[Math.floor(Math.random() * 4)];
+      currentColor = correct;
+
+      colorNameEl.textContent = correct.name;
+
+      shuffled.slice(0, 4).forEach(color => {
+        const box = document.createElement('div');
+        box.className = 'color-box';
+        box.style.backgroundColor = color.code;
+        box.onclick = () => checkAnswer(color);
+        choicesEl.appendChild(box);
+      });
+    }
+
+    function checkAnswer(color) {
+      const isCorrect = color.name === currentColor.name;
+      if (isCorrect) {
+        score++;
+        scoreEl.textContent = `Score: ${score}`;
+        document.body.classList.add('correct');
+      } else {
+        document.body.classList.add('wrong');
+      }
+
+      setTimeout(() => {
+        document.body.classList.remove('correct', 'wrong');
+        pickColor();
+      }, 300);
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      timeLeft = 30;
+      timerEl.textContent = `Time: ${timeLeft}`;
+
+      timer = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = `Time: ${timeLeft}`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          colorNameEl.textContent = 'Game Over!';
+          choicesEl.innerHTML = '';
+        }
+      }, 1000);
+    }
+
+    function startGame() {
+      score = 0;
+      scoreEl.textContent = 'Score: 0';
+      pickColor();
+      startTimer();
+    }
+
+    startBtn.onclick = startGame;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Calculator</title>
+  <style>
+    body {
+      background: #f2f2f2;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .calculator {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 340px;
+    }
+    .display {
+      background: #222;
+      color: #0f0;
+      padding: 15px;
+      font-size: 24px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: right;
+      overflow-x: auto;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .btn {
+      padding: 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #eee;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #ddd;
+    }
+    .btn.func {
+      background: #ffd700;
+    }
+    .btn.op {
+      background: #00aaff;
+      color: white;
+    }
+    .btn.equal {
+      background: #28a745;
+      color: white;
+      grid-column: span 2;
+    }
+    .btn.clear {
+      background: #dc3545;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="btn clear" onclick="clearDisplay()">C</button>
+      <button class="btn func" onclick="backspace()">⌫</button>
+      <button class="btn func" onclick="append('Math.PI')">π</button>
+      <button class="btn op" onclick="append('/')">/</button>
+
+      <button class="btn" onclick="append('7')">7</button>
+      <button class="btn" onclick="append('8')">8</button>
+      <button class="btn" onclick="append('9')">9</button>
+      <button class="btn op" onclick="append('*')">*</button>
+
+      <button class="btn" onclick="append('4')">4</button>
+      <button class="btn" onclick="append('5')">5</button>
+      <button class="btn" onclick="append('6')">6</button>
+      <button class="btn op" onclick="append('-')">-</button>
+
+      <button class="btn" onclick="append('1')">1</button>
+      <button class="btn" onclick="append('2')">2</button>
+      <button class="btn" onclick="append('3')">3</button>
+      <button class="btn op" onclick="append('+')">+</button>
+
+      <button class="btn" onclick="append('0')">0</button>
+      <button class="btn" onclick="append('.')">.</button>
+      <button class="btn equal" onclick="calculate()">=</button>
+
+      <button class="btn func" onclick="append('Math.sqrt(')">sqrt</button>
+      <button class="btn func" onclick="append('Math.pow(')">x^y</button>
+      <button class="btn func" onclick="append('Math.sin(')">sin</button>
+      <button class="btn func" onclick="append('Math.cos(')">cos</button>
+    </div>
+  </div>
+
+  <script>
+    let display = document.getElementById("display");
+
+    function append(value) {
+      if (display.textContent === "0") display.textContent = "";
+      display.textContent += value;
+    }
+
+    function clearDisplay() {
+      display.textContent = "0";
+    }
+
+    function backspace() {
+      display.textContent = display.textContent.slice(0, -1);
+      if (display.textContent === "") display.textContent = "0";
+    }
+
+    function calculate() {
+      try {
+        let result = eval(display.textContent);
+        display.textContent = result;
+      } catch {
+        display.textContent = "Error";
+      }
+    }
+  </script>
+</body>
+</html>

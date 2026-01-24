@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>🧩 Sliding Puzzle</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 2em;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    #puzzle {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      grid-gap: 5px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+    .tile {
+      width: 80px;
+      height: 80px;
+      font-size: 24px;
+      font-weight: bold;
+      background-color: #3498db;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .empty {
+      background: #ccc;
+      cursor: default;
+    }
+    #startBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #info {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧩 Sliding Puzzle</h1>
+  <button id="startBtn">Start Game</button>
+  <div id="info"></div>
+  <div id="puzzle"></div>
+
+  <script>
+    const puzzle = document.getElementById('puzzle');
+    const startBtn = document.getElementById('startBtn');
+    const info = document.getElementById('info');
+    let tiles = [];
+    let startTime;
+    let moves = 0;
+    const gridSize = 4;
+
+    function initPuzzle() {
+      tiles = Array.from({ length: gridSize * gridSize }, (_, i) => i);
+      do {
+        shuffle(tiles);
+      } while (!isSolvable(tiles));
+      moves = 0;
+      startTime = new Date();
+      renderPuzzle();
+      updateInfo();
+    }
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function isSolvable(arr) {
+      let inversions = 0;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+          if (arr[i] && arr[j] && arr[i] > arr[j]) inversions++;
+        }
+      }
+      const emptyRow = Math.floor(arr.indexOf(0) / gridSize);
+      if (gridSize % 2 === 0) {
+        return (inversions + emptyRow) % 2 === 1;
+      }
+      return inversions % 2 === 0;
+    }
+
+    function renderPuzzle() {
+      puzzle.innerHTML = '';
+      tiles.forEach((value, index) => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        if (value === 0) {
+          tile.classList.add('empty');
+        } else {
+          tile.textContent = value;
+          tile.addEventListener('click', () => moveTile(index));
+        }
+        puzzle.appendChild(tile);
+      });
+    }
+
+    function moveTile(index) {
+      const emptyIndex = tiles.indexOf(0);
+      if (isAdjacent(index, emptyIndex)) {
+        [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
+        moves++;
+        renderPuzzle();
+        updateInfo();
+        if (checkWin()) {
+          const timeTaken = Math.floor((new Date() - startTime) / 1000);
+          alert(`🎉 Selesai dalam ${moves} langkah dan ${timeTaken} detik!`);
+        }
+      }
+    }
+
+    function isAdjacent(i1, i2) {
+      const row1 = Math.floor(i1 / gridSize);
+      const col1 = i1 % gridSize;
+      const row2 = Math.floor(i2 / gridSize);
+      const col2 = i2 % gridSize;
+
+      return (row1 === row2 && Math.abs(col1 - col2) === 1) ||
+             (col1 === col2 && Math.abs(row1 - row2) === 1);
+    }
+
+    function checkWin() {
+      for (let i = 0; i < tiles.length - 1; i++) {
+        if (tiles[i] !== i + 1) return false;
+      }
+      return tiles[tiles.length - 1] === 0;
+    }
+
+    function updateInfo() {
+      info.textContent = `Langkah: ${moves}`;
+    }
+
+    startBtn.addEventListener('click', initPuzzle);
+    initPuzzle();
+  </script>
+</body>
+</html>

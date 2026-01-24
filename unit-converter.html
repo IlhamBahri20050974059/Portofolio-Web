@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>📏 Unit Converter</title>
+  <style>
+    :root{--bg:#f6f7fb;--card:#fff;--accent:#4f46e5;--muted:#6b7280}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);margin:0;padding:24px;display:flex;align-items:center;justify-content:center;min-height:100vh}
+    .card{background:var(--card);width:100%;max-width:760px;border-radius:12px;padding:20px;box-shadow:0 8px 30px rgba(15,23,42,0.08)}
+    h1{margin:0 0 10px;font-size:20px}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .col{flex:1;min-width:160px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    select,input{width:100%;padding:10px;border:1px solid #e6e9f2;border-radius:8px;font-size:15px}
+    .controls{display:flex;gap:8px;margin-top:12px}
+    button{background:var(--accent);color:#fff;border:none;padding:10px 12px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#fff;color:var(--accent);border:1px solid #e6e9f2}
+    .result{margin-top:16px;padding:12px;border-radius:8px;background:#f8fafc;border:1px dashed #e6e9f2}
+    .meta{margin-top:10px;color:var(--muted);font-size:13px}
+    .swap-btn{background:#f3f4ff;color:var(--accent);border:1px solid #e6e9f2}
+    @media(max-width:520px){.row{flex-direction:column}.controls{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>📏 Unit Converter</h1>
+    <p class="lead">Pilih kategori, masukkan angka, dan konversi antar satuan. Mendukung panjang, berat, suhu, dan kecepatan.</p>
+
+    <div class="row">
+      <div class="col">
+        <label for="category">Kategori</label>
+        <select id="category">
+          <option value="length">Panjang</option>
+          <option value="weight">Berat</option>
+          <option value="temperature">Suhu</option>
+          <option value="speed">Kecepatan</option>
+        </select>
+      </div>
+
+      <div class="col">
+        <label for="fromUnit">Dari</label>
+        <select id="fromUnit"></select>
+      </div>
+
+      <div class="col">
+        <label for="toUnit">Ke</label>
+        <select id="toUnit"></select>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:12px;align-items:end">
+      <div class="col">
+        <label for="value">Nilai</label>
+        <input type="number" id="value" placeholder="Masukkan angka" />
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="convertBtn">🔁 Konversi</button>
+        <button id="swapBtn" class="swap-btn">⇄ Tukar</button>
+      </div>
+    </div>
+
+    <div class="result" id="result">Hasil: —</div>
+    <div class="controls" style="margin-top:12px">
+      <button id="copyBtn">📋 Salin Hasil</button>
+      <button id="resetBtn" class="secondary">Reset</button>
+    </div>
+
+    <div class="meta">Tips: Untuk suhu, gunakan format angka (mis. 25). Konversi dilakukan saat tombol Konversi ditekan.</div>
+  </div>
+
+  <script>
+    // Unit definitions: convert to base unit then to target
+    const units = {
+      length: {
+        base: 'm',
+        units: {
+          m: 1,
+          km: 1000,
+          cm: 0.01,
+          mm: 0.001,
+          in: 0.0254,
+          ft: 0.3048,
+          yd: 0.9144,
+          mi: 1609.344
+        },
+        labels: {m:'Meter (m)', km:'Kilometer (km)', cm:'Centimeter (cm)', mm:'Milimeter (mm)', in:'Inch (in)', ft:'Feet (ft)', yd:'Yard (yd)', mi:'Mile (mi)'}
+      },
+      weight: {
+        base: 'kg',
+        units: {
+          kg:1,
+          g:0.001,
+          mg:0.000001,
+          lb:0.45359237,
+          oz:0.028349523125
+        },
+        labels: {kg:'Kilogram (kg)', g:'Gram (g)', mg:'Miligram (mg)', lb:'Pound (lb)', oz:'Ounce (oz)'}
+      },
+      temperature: {
+        // temperatures need special handling
+        units: {
+          C:'C', F:'F', K:'K'
+        },
+        labels: {C:'Celsius (°C)', F:'Fahrenheit (°F)', K:'Kelvin (K)'}
+      },
+      speed: {
+        base: 'm/s',
+        units: {
+          'm/s':1,
+          'km/h': 1000/3600,
+          'mph': 1609.344/3600,
+          'knot': 1852/3600
+        },
+        labels: {'m/s':'Meter/s (m/s)','km/h':'Kilometer/jam (km/h)','mph':'Mile/jam (mph)','knot':'Knot (kt)'}
+      }
+    };
+
+    const categoryEl = document.getElementById('category');
+    const fromEl = document.getElementById('fromUnit');
+    const toEl = document.getElementById('toUnit');
+    const valueEl = document.getElementById('value');
+    const resultEl = document.getElementById('result');
+    const convertBtn = document.getElementById('convertBtn');
+    const swapBtn = document.getElementById('swapBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    function populateUnits() {
+      const cat = categoryEl.value;
+      fromEl.innerHTML = '';
+      toEl.innerHTML = '';
+      const info = units[cat];
+      for (const key in info.units) {
+        const opt1 = document.createElement('option'); opt1.value=key; opt1.textContent = info.labels ? (info.labels[key]||key) : key;
+        const opt2 = opt1.cloneNode(true);
+        fromEl.appendChild(opt1);
+        toEl.appendChild(opt2);
+      }
+      // default selections
+      fromEl.value = Object.keys(info.units)[0];
+      toEl.value = Object.keys(info.units)[1] || fromEl.value;
+    }
+
+    function convert() {
+      const cat = categoryEl.value;
+      const from = fromEl.value;
+      const to = toEl.value;
+      const raw = parseFloat(valueEl.value);
+      if (isNaN(raw)) { resultEl.textContent = 'Hasil: masukkan angka yang valid.'; return; }
+
+      let out;
+      if (cat === 'temperature') {
+        out = convertTemperature(raw, from, to);
+      } else {
+        const info = units[cat];
+        const baseFrom = info.units[from];
+        const baseTo = info.units[to];
+        // convert to base then to target
+        const inBase = raw * baseFrom;
+        out = inBase / baseTo;
+      }
+
+      resultEl.innerHTML = `Hasil: <strong>${formatNumber(out)}</strong> ${units[cat].labels ? (units[cat].labels[to]||to) : to}`;
+    }
+
+    function convertTemperature(v, from, to) {
+      let C;
+      if (from === 'C') C = v;
+      if (from === 'F') C = (v - 32) * (5/9);
+      if (from === 'K') C = v - 273.15;
+
+      if (to === 'C') return C;
+      if (to === 'F') return (C * 9/5) + 32;
+      if (to === 'K') return C + 273.15;
+    }
+
+    function formatNumber(n) {
+      if (Math.abs(n) < 0.000001) return n.toFixed(10);
+      if (Math.abs(n) < 1) return parseFloat(n.toFixed(6));
+      if (Math.abs(n) < 1000) return parseFloat(n.toFixed(6));
+      return parseFloat(n.toFixed(6));
+    }
+
+    function swapUnits() {
+      const a = fromEl.value; fromEl.value = toEl.value; toEl.value = a;
+    }
+
+    function copyResult() {
+      const txt = resultEl.textContent.replace('Hasil:','').trim();
+      navigator.clipboard.writeText(txt).then(()=>{ alert('Hasil disalin!'); }).catch(()=>{ alert('Tidak dapat menyalin.'); });
+    }
+
+    function resetAll(){ categoryEl.value='length'; populateUnits(); valueEl.value=''; resultEl.textContent='Hasil: —'; }
+
+    // listeners
+    categoryEl.addEventListener('change', populateUnits);
+    convertBtn.addEventListener('click', convert);
+    swapBtn.addEventListener('click', ()=>{ swapUnits(); });
+    copyBtn.addEventListener('click', copyResult);
+    resetBtn.addEventListener('click', resetAll);
+
+    // init
+    populateUnits();
+  </script>
+</body>
+</html>

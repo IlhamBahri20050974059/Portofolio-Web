@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>📝 Tebak Kata</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+    }
+    .container {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      color: #34495e;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      font-size: 18px;
+      margin: 10px 0;
+      text-transform: uppercase;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #27ae60;
+    }
+    #wordDisplay {
+      font-size: 24px;
+      letter-spacing: 10px;
+      margin: 20px 0;
+    }
+    #history {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    #message {
+      font-weight: bold;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Tebak Kata</h1>
+  <div class="container">
+    <p>Klik start untuk memulai permainan.</p>
+    <button onclick="startGame()">Start</button>
+    <div id="wordDisplay">_ _ _ _ _</div>
+    <input type="text" id="letterInput" maxlength="1" placeholder="Masukkan huruf..." disabled>
+    <br>
+    <button onclick="checkLetter()" id="guessBtn" disabled>Tebak Huruf</button>
+    <div id="history">Riwayat tebakan: -</div>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    const wordList = ['APPLE', 'HOUSE', 'MOUSE', 'TABLE', 'PLANT', 'SUGAR', 'TEACH', 'CHAIR'];
+    let selectedWord = '';
+    let displayWord = [];
+    let attempts = 0;
+    const maxAttempts = 5;
+    let guessedLetters = [];
+    let gameActive = false;
+
+    function startGame() {
+      selectedWord = wordList[Math.floor(Math.random() * wordList.length)];
+      displayWord = Array(selectedWord.length).fill('_');
+      attempts = 0;
+      guessedLetters = [];
+      gameActive = true;
+
+      document.getElementById('wordDisplay').textContent = displayWord.join(' ');
+      document.getElementById('letterInput').disabled = false;
+      document.getElementById('guessBtn').disabled = false;
+      document.getElementById('message').textContent = '';
+      document.getElementById('history').textContent = 'Riwayat tebakan: -';
+      document.getElementById('letterInput').value = '';
+    }
+
+    function checkLetter() {
+      if (!gameActive) return;
+
+      const input = document.getElementById('letterInput');
+      let letter = input.value.toUpperCase();
+      input.value = '';
+
+      if (!letter.match(/[A-Z]/) || guessedLetters.includes(letter)) return;
+
+      guessedLetters.push(letter);
+
+      let found = false;
+      for (let i = 0; i < selectedWord.length; i++) {
+        if (selectedWord[i] === letter) {
+          displayWord[i] = letter;
+          found = true;
+        }
+      }
+
+      if (!found) attempts++;
+
+      document.getElementById('wordDisplay').textContent = displayWord.join(' ');
+      document.getElementById('history').textContent = 'Riwayat tebakan: ' + guessedLetters.join(', ');
+
+      if (displayWord.join('') === selectedWord) {
+        document.getElementById('message').textContent = `🎉 Kamu berhasil menebak kata "${selectedWord}"!`;
+        endGame();
+      } else if (attempts >= maxAttempts) {
+        document.getElementById('message').textContent = `❌ Gagal! Kata yang benar: "${selectedWord}".`;
+        endGame();
+      }
+    }
+
+    function endGame() {
+      gameActive = false;
+      document.getElementById('letterInput').disabled = true;
+      document.getElementById('guessBtn').disabled = true;
+    }
+  </script>
+</body>
+</html>

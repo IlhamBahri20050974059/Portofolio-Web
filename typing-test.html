@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Speed Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    #quote {
+      font-size: 24px;
+      margin-bottom: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .correct {
+      color: green;
+    }
+
+    .incorrect {
+      color: red;
+    }
+
+    #input {
+      width: 60%;
+      padding: 10px;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    #stats {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Typing Speed Test</h1>
+  <div id="quote"></div>
+  <br>
+  <input type="text" id="input" placeholder="Mulai mengetik di sini..." disabled>
+  <br>
+  <button onclick="startTest()">Mulai Ulang</button>
+
+  <div id="stats"></div>
+
+  <script>
+    const quotes = [
+      "Pemrograman adalah seni menginstruksikan komputer.",
+      "Belajar mengetik bisa menyenangkan dan bermanfaat.",
+      "Latihan membuat kemampuan mengetik semakin cepat.",
+      "Kecepatan bukan segalanya, akurasi juga penting.",
+      "Selalu periksa kembali apa yang telah kamu ketik."
+    ];
+
+    let currentQuote = "";
+    let startTime;
+
+    function getRandomQuote() {
+      return quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    function displayQuote(quote) {
+      const quoteElement = document.getElementById("quote");
+      quoteElement.innerHTML = "";
+      quote.split("").forEach(char => {
+        const span = document.createElement("span");
+        span.textContent = char;
+        quoteElement.appendChild(span);
+      });
+    }
+
+    function startTest() {
+      currentQuote = getRandomQuote();
+      displayQuote(currentQuote);
+      document.getElementById("input").value = "";
+      document.getElementById("input").disabled = false;
+      document.getElementById("input").focus();
+      document.getElementById("stats").textContent = "";
+      startTime = new Date();
+    }
+
+    document.getElementById("input").addEventListener("input", () => {
+      const input = document.getElementById("input").value;
+      const spans = document.querySelectorAll("#quote span");
+      let correct = true;
+
+      spans.forEach((span, i) => {
+        const char = input[i];
+        if (char == null) {
+          span.classList.remove("correct", "incorrect");
+          correct = false;
+        } else if (char === span.textContent) {
+          span.classList.add("correct");
+          span.classList.remove("incorrect");
+        } else {
+          span.classList.add("incorrect");
+          span.classList.remove("correct");
+          correct = false;
+        }
+      });
+
+      if (input.length === currentQuote.length && correct) {
+        const endTime = new Date();
+        const timeTaken = (endTime - startTime) / 1000; // dalam detik
+        const wordCount = currentQuote.trim().split(/\s+/).length;
+        const charCount = currentQuote.length;
+        const wpm = Math.round((wordCount / timeTaken) * 60);
+        const cpd = (charCount / timeTaken).toFixed(2);
+        const accuracy = Math.round((input.length / currentQuote.length) * 100);
+
+        document.getElementById("stats").innerHTML = `
+          <p>⏱️ Waktu: ${timeTaken.toFixed(2)} detik</p>
+          <p>🔠 Jumlah Karakter: ${charCount}</p>
+          <p>⚡ Kecepatan: ${wpm} WPM</p>
+          <p>⚙️ Karakter per Detik: ${cpd}</p>
+          <p>✅ Akurasi: ${accuracy}%</p>
+        `;
+        document.getElementById("input").disabled = true;
+      }
+    });
+
+    window.onload = startTest;
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      grid-gap: 10px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+
+    .card {
+      width: 80px;
+      height: 80px;
+      background: #444;
+      font-size: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 8px;
+    }
+
+    .card.matched {
+      background: #2ecc71;
+      cursor: default;
+    }
+
+    .card.revealed {
+      background: #3498db;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    #time-display {
+      font-size: 20px;
+      margin-top: 10px;
+      color: #f1c40f;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Memory Game 🧠</h1>
+  <button onclick="startGame()">Start Game</button>
+  <div id="game-board"></div>
+  <div id="time-display"></div>
+
+  <script>
+    const symbols = ['🐶','🐱','🦊','🐻','🐸','🐵','🐧','🐰'];
+    let firstCard = null;
+    let lockBoard = false;
+    let matchedCount = 0;
+    let startTime;
+    let timerId;
+
+    function startGame() {
+      const board = document.getElementById("game-board");
+      const timeDisplay = document.getElementById("time-display");
+      board.innerHTML = "";
+      timeDisplay.textContent = "";
+
+      const deck = [...symbols, ...symbols].sort(() => 0.5 - Math.random());
+
+      deck.forEach(symbol => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.symbol = symbol;
+        card.textContent = "";
+        card.addEventListener("click", () => revealCard(card));
+        board.appendChild(card);
+      });
+
+      matchedCount = 0;
+      firstCard = null;
+      lockBoard = false;
+      startTime = Date.now();
+
+      if (timerId) clearInterval(timerId);
+    }
+
+    function revealCard(card) {
+      if (lockBoard || card.classList.contains("matched") || card.classList.contains("revealed")) return;
+
+      card.classList.add("revealed");
+      card.textContent = card.dataset.symbol;
+
+      if (!firstCard) {
+        firstCard = card;
+      } else {
+        lockBoard = true;
+        setTimeout(() => {
+          if (card.dataset.symbol === firstCard.dataset.symbol) {
+            card.classList.add("matched");
+            firstCard.classList.add("matched");
+            matchedCount += 2;
+
+            if (matchedCount === 16) {
+              const endTime = Date.now();
+              const totalSeconds = ((endTime - startTime) / 1000).toFixed(2);
+              document.getElementById("time-display").textContent = `Selesai dalam ${totalSeconds} detik!`;
+            }
+          } else {
+            card.classList.remove("revealed");
+            card.textContent = "";
+            firstCard.classList.remove("revealed");
+            firstCard.textContent = "";
+          }
+          firstCard = null;
+          lockBoard = false;
+        }, 800);
+      }
+    }
+  </script>
+
+</body>
+</html>
