@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snakes & Ladders</title>
+    <link rel="stylesheet" href="assets/css/ulartangga.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <h1>🐍 Snakes & Ladders</h1>
+
+        <div class="turn" id="turn">
+            Giliran Player 1
+        </div>
+
+        <div class="dice-box">
+            <div id="dice" class="dice">⚀</div>
+        </div>
+
+        <button id="rollBtn">🎲 Lempar Dadu</button>
+        <button id="restartBtn">🔄 Restart</button>
+
+        <div class="players">
+            <div class="player-card active" id="card1">
+                🔴 Player 1
+                <span id="pos1">1</span>
+            </div>
+
+            <div class="player-card" id="card2">
+                🔵 Player 2
+                <span id="pos2">1</span>
+            </div>
+        </div>
+
+        <div class="history" id="history"></div>
+    </div>
+
+    <div class="board-wrapper">
+
+        <svg id="overlay"></svg>
+
+        <div id="board" class="board"></div>
+
+    </div>
+
+</div>
+
+<script src="assets/js/ulartangga.js"></script>
+
+</body>
+</html>
