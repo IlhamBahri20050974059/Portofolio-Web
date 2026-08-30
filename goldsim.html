@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoldSim - Simulator & Kalkulator Emas Real-Time</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --gold-primary: #f59e0b;
+      --gold-hover: #d97706;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --green: #10b981;
+      --red: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--gold-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Price Bar */
+    .price-bar {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(30, 41, 59, 1));
+      border: 1px solid var(--gold-primary);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .price-item {
+      text-align: center;
+    }
+
+    .price-item .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .price-item .value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      margin-top: 0.2rem;
+    }
+
+    /* Layout Grid */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .grid-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1.25rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Form Inputs */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--gold-primary);
+    }
+
+    /* Results Display */
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .result-row:last-child {
+      border-bottom: none;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .result-value {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .badge-profit { background: rgba(16, 185, 129, 0.2); color: var(--green); }
+    .badge-loss { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+
+    .btn-refresh {
+      background-color: var(--gold-primary);
+      color: #000;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-refresh:hover {
+      background-color: var(--gold-hover);
+    }
+
+    .time-stamp {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>GoldSim Simulator</h1>
+    <p>Hitung potensi keuntungan investasi emas secara akurat & real-time</p>
+  </header>
+
+  <div class="price-bar">
+    <div class="price-item">
+      <div class="label">Harga Emas World (XAU/USD)</div>
+      <div class="value" id="priceXau">$0.00</div>
+    </div>
+    <div class="price-item">
+      <div class="label">Kurs Dolar (USD/IDR)</div>
+      <div class="value" id="priceUsd">Rp 0</div>
+    </div>
+    <div class="price-item">
+      <div class="label">Est. Emas Murni / Gram (IDR)</div>
+      <div class="value" id="priceIdrGram">Rp 0</div>
+    </div>
+    <button class="btn-refresh" onclick="fetchLivePrices()">Refresh Data</button>
+  </div>
+
+  <div class="grid-layout">
+    <div class="card">
+      <h2>⚙️ Parameter Investasi</h2>
+      
+      <div class="form-group">
+        <label for="weight">Jumlah Emas (Gram)</label>
+        <input type="number" id="weight" value="10" min="0.1" step="0.1" oninput="calculate()">
+      </div>
+
+      <div class="form-group">
+        <label for="buyPrice">Harga Beli Kamu per Gram (Rp)</label>
+        <input type="number" id="buyPrice" value="1200000" step="1000" oninput="calculate()">
+      </div>
+
+      <div class="form-group">
+        <label for="buybackSpread">Estimasi Spread / Potongan Jual Kembali (%)</label>
+        <input type="number" id="buybackSpread" value="11" min="0" max="30" step="0.5" oninput="calculate()">
+      </div>
+
+      <div class="form-group">
+        <label for="years">Proyeksi Masa Depan (Tahun)</label>
+        <select id="years" onchange="calculate()">
+          <option value="0">Saat Ini (Real-time)</option>
+          <option value="1">1 Tahun Lagi</option>
+          <option value="3">3 Tahun Lagi</option>
+          <option value="5">5 Tahun Lagi</option>
+          <option value="10">10 Tahun Lagi</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="growthGroup" style="display: none;">
+        <label for="annualGrowth">Estimasi Kenaikan Emas per Tahun (%)</label>
+        <input type="number" id="annualGrowth" value="8" step="0.5" oninput="calculate()">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Hasil Kalkulasi</h2>
+
+      <div class="result-row">
+        <span class="result-label">Total Modal Pembelian</span>
+        <span class="result-value" id="totalCapital">Rp 0</span>
+      </div>
+
+      <div class="result-row">
+        <span class="result-label">Estimasi Harga Jual Kembali / Gram</span>
+        <span class="result-value" id="estimatedSellPriceGram">Rp 0</span>
+      </div>
+
+      <div class="result-row">
+        <span class="result-label">Total Nilai Penjualan (Buyback)</span>
+        <span class="result-value" id="totalCurrentValue">Rp 0</span>
+      </div>
+
+      <div class="result-row">
+        <span class="result-label">Est. Keuntungan / Kerugian</span>
+        <span class="result-value" id="profitLossAmount">Rp 0</span>
+      </div>
+
+      <div class="result-row">
+        <span class="result-label">Persentase ROI</span>
+        <span class="result-value" id="roiPercentage">0%</span>
+      </div>
+
+      <div class="result-row">
+        <span class="result-label">Status Investasi</span>
+        <span id="statusBadge" class="status-badge badge-profit">Untung</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="time-stamp" id="lastUpdated">Mengambil data harga pasar...</div>
+</div>
+
+<script>
+  let currentGoldPricePerGramIDR = 0;
+  const TROY_OUNCE_TO_GRAM = 31.1034768;
+
+  // Format Angka ke Rupiah
+  function formatIDR(amount) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0
+    }).format(amount);
+  }
+
+  // Format Angka ke USD
+  function formatUSD(amount) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2
+    }).format(amount);
+  }
+
+  // Ambil Data Real-Time dari API
+  async function fetchLivePrices() {
+    const timestampEl = document.getElementById('lastUpdated');
+    timestampEl.innerText = "Memperbarui harga...";
+
+    try {
+      // 1. Fetch Harga Emas Dunia (XAU/USD)
+      const goldRes = await fetch('https://api.gold-api.com/price/XAU');
+      const goldData = await goldRes.json();
+      const priceXauUsd = goldData.price;
+
+      // 2. Fetch Kurs Mata Uang (USD/IDR)
+      const fxRes = await fetch('https://open.er-api.com/v6/latest/USD');
+      const fxData = await fxRes.json();
+      const usdToIdr = fxData.rates.IDR;
+
+      // Hitung Emas Murni per Gram dalam IDR
+      const pricePerGramUSD = priceXauUsd / TROY_OUNCE_TO_GRAM;
+      currentGoldPricePerGramIDR = pricePerGramUSD * usdToIdr;
+
+      // Update Tampilan Baris Atas
+      document.getElementById('priceXau').innerText = formatUSD(priceXauUsd);
+      document.getElementById('priceUsd').innerText = formatIDR(usdToIdr);
+      document.getElementById('priceIdrGram').innerText = formatIDR(currentGoldPricePerGramIDR);
+
+      timestampEl.innerText = `Terakhir diperbarui: ${new Date().toLocaleTimeString('id-ID')}`;
+      calculate();
+
+    } catch (error) {
+      console.warn("Gagal mengambil data API, menggunakan harga fallback:", error);
+      
+      // Fallback Harga jika API rate limit / error
+      const fallbackUsdToIdr = 15800;
+      const fallbackXauUsd = 2650;
+      currentGoldPricePerGramIDR = (fallbackXauUsd / TROY_OUNCE_TO_GRAM) * fallbackUsdToIdr;
+
+      document.getElementById('priceXau').innerText = formatUSD(fallbackXauUsd) + " (Est)";
+      document.getElementById('priceUsd').innerText = formatIDR(fallbackUsdToIdr) + " (Est)";
+      document.getElementById('priceIdrGram').innerText = formatIDR(currentGoldPricePerGramIDR);
+      timestampEl.innerText = "Menggunakan data estimasi pasar offline.";
+      
+      calculate();
+    }
+  }
+
+  // Logika Kalkulator & Simulator
+  function calculate() {
+    if (!currentGoldPricePerGramIDR) return;
+
+    const weight = parseFloat(document.getElementById('weight').value) || 0;
+    const buyPricePerGram = parseFloat(document.getElementById('buyPrice').value) || 0;
+    const spreadPct = parseFloat(document.getElementById('buybackSpread').value) || 0;
+    const years = parseInt(document.getElementById('years').value) || 0;
+    const annualGrowth = parseFloat(document.getElementById('annualGrowth').value) || 0;
+
+    // Tampilkan field kenaikan tahunan jika memilih proyeksi > 0 tahun
+    const growthGroup = document.getElementById('growthGroup');
+    if (years > 0) {
+      growthGroup.style.display = 'block';
+    } else {
+      growthGroup.style.display = 'none';
+    }
+
+    // 1. Total Modal Beli
+    const totalCapital = weight * buyPricePerGram;
+
+    // 2. Hitung Proyeksi Harga Emas Mentah di Masa Depan
+    let futureBasePrice = currentGoldPricePerGramIDR;
+    if (years > 0) {
+      futureBasePrice = currentGoldPricePerGramIDR * Math.pow(1 + (annualGrowth / 100), years);
+    }
+
+    // 3. Hitung Harga Buyback (Setelah Dipotong Spread)
+    const estimatedSellPriceGram = futureBasePrice * (1 - (spreadPct / 100));
+    const totalCurrentValue = weight * estimatedSellPriceGram;
+
+    // 4. Hitung Profit / Loss
+    const profitLoss = totalCurrentValue - totalCapital;
+    const roi = totalCapital > 0 ? (profitLoss / totalCapital) * 100 : 0;
+
+    // Update Elemen UI
+    document.getElementById('totalCapital').innerText = formatIDR(totalCapital);
+    document.getElementById('estimatedSellPriceGram').innerText = formatIDR(estimatedSellPriceGram);
+    document.getElementById('totalCurrentValue').innerText = formatIDR(totalCurrentValue);
+    
+    const profitLossEl = document.getElementById('profitLossAmount');
+    const roiEl = document.getElementById('roiPercentage');
+    const statusBadge = document.getElementById('statusBadge');
+
+    profitLossEl.innerText = (profitLoss >= 0 ? "+ " : "") + formatIDR(profitLoss);
+    roiEl.innerText = `${roi.toFixed(2)}%`;
+
+    if (profitLoss >= 0) {
+      profitLossEl.style.color = "var(--green)";
+      roiEl.style.color = "var(--green)";
+      statusBadge.className = "status-badge badge-profit";
+      statusBadge.innerText = "Untung";
+    } else {
+      profitLossEl.style.color = "var(--red)";
+      roiEl.style.color = "var(--red)";
+      statusBadge.className = "status-badge badge-loss";
+      statusBadge.innerText = "Rugi";
+    }
+  }
+
+  // Load awal saat halaman dibuka
+  fetchLivePrices();
+</script>
+</body>
+</html>

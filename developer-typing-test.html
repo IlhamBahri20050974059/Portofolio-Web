@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevType - Developer Typing Test Pro</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #1e1e2e;
+      --card-bg: #181825;
+      --text: #cdd6f4;
+      --subtext: #6c7086;
+      --correct: #a6e3a1;
+      --incorrect: #f38ba8;
+      --cursor: #89b4fa;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Fira Code', 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    select, button, label {
+      font-family: inherit;
+      background: #313244;
+      color: var(--text);
+      border: 1px solid #45475a;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    select:focus, button:focus {
+      outline: 2px solid var(--cursor);
+    }
+
+    .sound-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      color: var(--subtext);
+      background: #11111b;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .stats span {
+      color: var(--cursor);
+      font-weight: bold;
+    }
+
+    .code-display {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      background: #11111b;
+      padding: 1.5rem;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      letter-spacing: 1px;
+      user-select: none;
+      min-height: 100px;
+    }
+
+    .char { color: var(--subtext); border-bottom: 2px solid transparent; }
+    .char.correct { color: var(--correct); }
+    .char.incorrect { color: var(--incorrect); background: rgba(243, 139, 168, 0.2); }
+    .char.current { border-bottom: 2px solid var(--cursor); animation: blink 1s infinite; }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .btn-reset {
+      background: var(--cursor);
+      color: var(--bg);
+      border: none;
+      font-weight: bold;
+      margin-top: 1.5rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 650px;
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid #45475a;
+    }
+
+    .chart-container {
+      margin-top: 1rem;
+      position: relative;
+      height: 250px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>DevType - Developer Typing Test Pro</h1>
+  <div class="controls">
+    <div>
+      <label for="langSelect">Bahasa:</label>
+      <select id="langSelect" onchange="initGame()">
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="rust">Rust</option>
+        <option value="sql">SQL</option>
+      </select>
+    </div>
+
+    <label class="sound-toggle">
+      <input type="checkbox" id="soundToggle" checked> Efek Suara Ketikan
+    </label>
+  </div>
+
+  <div class="stats">
+    <div>WPM: <span id="wpm">0</span></div>
+    <div>Akurasi: <span id="accuracy">100%</span></div>
+    <div>Waktu: <span id="timer">0s</span></div>
+  </div>
+
+  <div class="code-display" id="codeDisplay"></div>
+
+  <button class="btn-reset" onclick="initGame()">Ulangi (Esc)</button>
+</div>
+
+<!-- Modal Hasil & Grafik -->
+<div class="modal" id="resultModal">
+  <div class="modal-content">
+    <h2>Hasil Sesi Pengetikan</h2>
+    <p>WPM Akhir: <strong id="modalWpm" style="color:var(--cursor)">0</strong> | Akurasi: <strong id="modalAcc" style="color:var(--correct)">0%</strong></p>
+    <div class="chart-container">
+      <canvas id="wpmChart"></canvas>
+    </div>
+    <div style="margin-top:1.5rem; text-align:right;">
+      <button class="btn-reset" onclick="closeModal()">Tutup & Coba Lagi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const snippets = {
+    javascript: [
+      "const sum = (a, b) => a + b;",
+      "function fetchData(url) { return fetch(url).then(res => res.json()); }",
+      "const filtered = items.filter(item => item.price < 50 && item.inStock);",
+      "const [state, setState] = useState({ data: [], loading: true });"
+    ],
+    python: [
+      "def calculate_area(radius):\n    return 3.14159 * (radius ** 2)",
+      "users = [user for user in all_users if user['is_active']]",
+      "with open('data.json', 'r') as file:\n    data = json.load(file)"
+    ],
+    rust: [
+      "fn main() {\n    println!(\"Hello, world!\");\n}",
+      "let mut vec = Vec::new();\nvec.push(1);",
+      "pub fn add(left: usize, right: usize) -> usize {\n    left + right\n}"
+    ],
+    sql: [
+      "SELECT id, name, email FROM users WHERE status = 'active' ORDER BY created_at DESC;",
+      "UPDATE products SET stock = stock - 1 WHERE id = 42 AND stock > 0;",
+      "JOIN orders ON users.id = orders.user_id GROUP BY users.id HAVING COUNT(orders.id) > 5;"
+    ]
+  };
+
+  let currentText = "";
+  let currentIndex = 0;
+  let startTime = null;
+  let timerInterval = null;
+  let errors = 0;
+  let totalTyped = 0;
+  let wpmHistory = [];
+  let timeLabels = [];
+  let chartInstance = null;
+
+  // Web Audio API Synth untuk Efek Suara Mechanical Key Click tanpa dependency audio external
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  function playClickSound() {
+    const soundEnabled = document.getElementById("soundToggle").checked;
+    if (!soundEnabled) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.03);
+
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.03);
+  }
+
+  const displayEl = document.getElementById('codeDisplay');
+  const wpmEl = document.getElementById('wpm');
+  const accuracyEl = document.getElementById('accuracy');
+  const timerEl = document.getElementById('timer');
+
+  function initGame() {
+    clearInterval(timerInterval);
+    startTime = null;
+    currentIndex = 0;
+    errors = 0;
+    totalTyped = 0;
+    wpmHistory = [];
+    timeLabels = [];
+
+    wpmEl.innerText = "0";
+    accuracyEl.innerText = "100%";
+    timerEl.innerText = "0s";
+
+    const lang = document.getElementById('langSelect').value;
+    const langSnippets = snippets[lang];
+    currentText = langSnippets[Math.floor(Math.random() * langSnippets.length)];
+
+    displayEl.innerHTML = "";
+    currentText.split("").forEach((char, index) => {
+      const span = document.createElement("span");
+      span.innerText = char;
+      span.classList.add("char");
+      if (index === 0) span.classList.add("current");
+      displayEl.appendChild(span);
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      initGame();
+      closeModal();
+      return;
+    }
+
+    const chars = displayEl.querySelectorAll(".char");
+    if (currentIndex >= chars.length) return;
+
+    if (e.key.length > 1 && e.key !== "Backspace" && e.key !== "Enter") return;
+
+    if (!startTime) {
+      startTime = new Date();
+      timerInterval = setInterval(updateStats, 1000);
+    }
+
+    playClickSound();
+
+    if (e.key === "Backspace") {
+      if (currentIndex > 0) {
+        chars[currentIndex].classList.remove("current");
+        currentIndex--;
+        chars[currentIndex].className = "char current";
+      }
+      return;
+    }
+
+    totalTyped++;
+    let expectedChar = currentText[currentIndex];
+    let inputChar = e.key;
+    if (e.key === "Enter") inputChar = "\n";
+
+    if (inputChar === expectedChar) {
+      chars[currentIndex].className = "char correct";
+    } else {
+      chars[currentIndex].className = "char incorrect";
+      errors++;
+    }
+
+    currentIndex++;
+
+    if (currentIndex < chars.length) {
+      chars[currentIndex].classList.add("current");
+    } else {
+      clearInterval(timerInterval);
+      updateStats();
+      showResults();
+    }
+
+    updateAccuracy();
+  });
+
+  function updateStats() {
+    if (!startTime) return;
+    const elapsedSeconds = Math.floor((new Date() - startTime) / 1000);
+    timerEl.innerText = `${elapsedSeconds}s`;
+
+    let currentWpm = 0;
+    if (elapsedSeconds > 0) {
+      const correctChars = currentIndex - errors;
+      currentWpm = Math.max(0, Math.round((correctChars / 5) / (elapsedSeconds / 60)));
+      wpmEl.innerText = currentWpm;
+    }
+
+    wpmHistory.push(currentWpm);
+    timeLabels.push(`${elapsedSeconds}s`);
+  }
+
+  function updateAccuracy() {
+    if (totalTyped === 0) return;
+    const acc = Math.round(((totalTyped - errors) / totalTyped) * 100);
+    accuracyEl.innerText = `${Math.max(0, acc)}%`;
+  }
+
+  function showResults() {
+    document.getElementById("modalWpm").innerText = wpmEl.innerText;
+    document.getElementById("modalAcc").innerText = accuracyEl.innerText;
+    document.getElementById("resultModal").classList.add("active");
+
+    renderChart();
+  }
+
+  function closeModal() {
+    document.getElementById("resultModal").classList.remove("active");
+    initGame();
+  }
+
+  function renderChart() {
+    const ctx = document.getElementById('wpmChart').getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: timeLabels,
+        datasets: [{
+          label: 'WPM (Words Per Minute)',
+          data: wpmHistory,
+          borderColor: '#89b4fa',
+          backgroundColor: 'rgba(137, 180, 250, 0.15)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { grid: { color: '#313244' }, ticks: { color: '#cdd6f4' } },
+          y: { grid: { color: '#313244' }, ticks: { color: '#cdd6f4' }, beginAtZero: true }
+        },
+        plugins: {
+          legend: { labels: { color: '#cdd6f4' } }
+        }
+      }
+    });
+  }
+
+  initGame();
+</script>
+</body>
+</html>

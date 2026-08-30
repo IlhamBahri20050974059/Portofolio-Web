@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimKredit - Simulator & Kalkulator Pinjaman</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --green: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 950px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+    }
+
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .grid-layout { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--primary);
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .result-item:last-child { border-bottom: none; }
+    .result-label { font-size: 0.9rem; color: var(--text-muted); }
+    .result-value { font-size: 1.1rem; font-weight: 700; }
+    .highlight { color: var(--green); font-size: 1.3rem; }
+
+    /* Table Styling */
+    .table-container {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-top: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #0f172a;
+      color: var(--text-muted);
+      padding: 0.75rem;
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tr:hover { background-color: rgba(255, 255, 255, 0.02); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>SimKredit Simulator</h1>
+    <p>Kalkulator angsuran pinjaman dengan opsi Bunga Flat & Anuitas</p>
+  </header>
+
+  <div class="grid-layout">
+    <div class="card">
+      <h2>⚙️ Input Pinjaman</h2>
+      
+      <div class="form-group">
+        <label for="amount">Jumlah Pinjaman / Plafon (Rp)</label>
+        <input type="number" id="amount" value="100000000" step="1000000" oninput="calculateLoan()">
+      </div>
+
+      <div class="form-group">
+        <label for="interest">Suku Bunga Per Tahun (%)</label>
+        <input type="number" id="interest" value="10" step="0.1" oninput="calculateLoan()">
+      </div>
+
+      <div class="form-group">
+        <label for="tenure">Jangka Waktu / Tenor (Tahun)</label>
+        <input type="number" id="tenure" value="3" min="1" max="30" oninput="calculateLoan()">
+      </div>
+
+      <div class="form-group">
+        <label for="type">Skema Bunga</label>
+        <select id="type" onchange="calculateLoan()">
+          <option value="annuity">Bunga Anuitas (KPR / Efektif)</option>
+          <option value="flat">Bunga Flat (KTA / Kendaraan)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Ringkasan Angsuran</h2>
+
+      <div class="result-item">
+        <span class="result-label">Angsuran / Bulan</span>
+        <span class="result-value highlight" id="monthlyPayment">Rp 0</span>
+      </div>
+
+      <div class="result-item">
+        <span class="result-label">Total Pinjaman Pokok</span>
+        <span class="result-value" id="principalAmount">Rp 0</span>
+      </div>
+
+      <div class="result-item">
+        <span class="result-label">Total Pembayaran Bunga</span>
+        <span class="result-value" id="totalInterestAmount">Rp 0</span>
+      </div>
+
+      <div class="result-item">
+        <span class="result-label">Total Pengembalian</span>
+        <span class="result-value" id="totalPaymentAmount">Rp 0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📅 Jadwal Angsuran Bulanan</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>Angsuran Pokok</th>
+            <th>Angsuran Bunga</th>
+            <th>Total Angsuran</th>
+            <th>Sisa Pinjaman</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  function formatIDR(val) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0
+    }).format(val);
+  }
+
+  function calculateLoan() {
+    const principal = parseFloat(document.getElementById('amount').value) || 0;
+    const annualRate = parseFloat(document.getElementById('interest').value) || 0;
+    const years = parseInt(document.getElementById('tenure').value) || 0;
+    const loanType = document.getElementById('type').value;
+
+    const totalMonths = years * 12;
+    const monthlyRate = (annualRate / 100) / 12;
+
+    if (principal <= 0 || totalMonths <= 0) return;
+
+    let monthlyPayment = 0;
+    let totalInterest = 0;
+    let schedule = [];
+    let balance = principal;
+
+    if (loanType === 'flat') {
+      // Formulasi Bunga Flat
+      const totalInterestFlat = principal * (annualRate / 100) * years;
+      const monthlyPrincipal = principal / totalMonths;
+      const monthlyInterest = totalInterestFlat / totalMonths;
+      monthlyPayment = monthlyPrincipal + monthlyInterest;
+      totalInterest = totalInterestFlat;
+
+      for (let i = 1; i <= totalMonths; i++) {
+        balance -= monthlyPrincipal;
+        schedule.push({
+          month: i,
+          principalPayment: monthlyPrincipal,
+          interestPayment: monthlyInterest,
+          totalPayment: monthlyPayment,
+          remainingBalance: Math.max(0, balance)
+        });
+      }
+    } else {
+      // Formulasi Bunga Anuitas
+      if (monthlyRate > 0) {
+        monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+      } else {
+        monthlyPayment = principal / totalMonths;
+      }
+
+      for (let i = 1; i <= totalMonths; i++) {
+        const interestPayment = balance * monthlyRate;
+        const principalPayment = monthlyPayment - interestPayment;
+        balance -= principalPayment;
+        totalInterest += interestPayment;
+
+        schedule.push({
+          month: i,
+          principalPayment: principalPayment,
+          interestPayment: interestPayment,
+          totalPayment: monthlyPayment,
+          remainingBalance: Math.max(0, balance)
+        });
+      }
+    }
+
+    // Output UI
+    document.getElementById('monthlyPayment').innerText = formatIDR(monthlyPayment);
+    document.getElementById('principalAmount').innerText = formatIDR(principal);
+    document.getElementById('totalInterestAmount').innerText = formatIDR(totalInterest);
+    document.getElementById('totalPaymentAmount').innerText = formatIDR(principal + totalInterest);
+
+    // Render Tabel Amortisasi
+    const tbody = document.getElementById('scheduleBody');
+    tbody.innerHTML = '';
+    schedule.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row.month}</td>
+        <td>${formatIDR(row.principalPayment)}</td>
+        <td>${formatIDR(row.interestPayment)}</td>
+        <td>${formatIDR(row.totalPayment)}</td>
+        <td>${formatIDR(row.remainingBalance)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Running awal
+  calculateLoan();
+</script>
+</body>
+</html>
