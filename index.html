@@ -5,8 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>Ilham Bahri Albi Portofolio</title>
-<base href="/Portofolio-Web/">
+  <title>Ilham Bahri Albi | Portfolio & Certifications</title>
   <meta content="Ilham Bahri Albi's portfolio as a Web Developer, Android Developer, and Teacher." name="description">
   <meta content="Ilham Bahri Albi, Portfolio, Web Developer, Android Developer, Teacher, Computer Science" name="keywords">
 
@@ -15,144 +14,105 @@
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <script src="https://cdn.jsdelivr.net/npm/@srexi/purecounterjs/dist/purecounter_vanilla.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
-
-<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-
-<link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: MyResume - v4.10.0
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
-<div id="floatingPlayer">
-  <button id="prevBtn">⏮</button>
-  <button id="playPauseBtn">⏸</button>
-  <button id="nextBtn">⏭</button>
-  <span id="audioTitle"></span>
-</div>
 
-<audio id="bgAudio"></audio>
-<script>
-  const playlist = [
-    { title: "Xanadu Next OST - Clover Ruins", src: "assets/audio/Xanadu Next OST - Clover Ruins.m4a" },
-    { title: "Xanadu Next OST - Harlech", src: "assets/audio/Xanadu Next OST - Harlech.m4a" },
-    { title: "Xanadu Next OST - La Valse Pour Xanadu", src: "assets/audio/Xanadu Next OST - La Valse Pour Xanadu.m4a" },
-    { title: "Xanadu Next OST - Trechier Woods", src: "assets/audio/Xanadu Next OST - Trechier Woods.m4a" },
-  ];
+  <!-- Scroll Progress Indicator Bar -->
+  <div id="scroll-progress"></div>
 
-  let currentIndex = 0;
-  const audio = document.getElementById("bgAudio");
-  const playPauseBtn = document.getElementById("playPauseBtn");
-  const titleEl = document.getElementById("audioTitle");
+  <!-- Floating Audio Player (Top Right Corner) -->
+  <div id="floatingPlayer">
+    <div class="player-controls">
+      <button id="prevBtn" title="Previous Track" aria-label="Previous Track"><i class="bi bi-skip-start-fill"></i></button>
+      <button id="playPauseBtn" title="Play/Pause" aria-label="Play or Pause"><i class="bi bi-play-fill"></i></button>
+      <button id="nextBtn" title="Next Track" aria-label="Next Track"><i class="bi bi-skip-end-fill"></i></button>
+    </div>
+    <div class="audio-info">
+      <div class="music-wave">
+        <span></span><span></span><span></span>
+      </div>
+      <span id="audioTitle">Loading...</span>
+    </div>
+  </div>
 
-  function loadAudio(index) {
-    audio.src = playlist[index].src;
-    titleEl.textContent = playlist[index].title;
-    audio.play();
-    playPauseBtn.textContent = "⏸";
-  }
+  <audio id="bgAudio"></audio>
 
-  playPauseBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play();
-      playPauseBtn.textContent = "⏸";
-    } else {
-      audio.pause();
-      playPauseBtn.textContent = "▶️";
-    }
-  });
-
-  document.getElementById("nextBtn").addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % playlist.length;
-    loadAudio(currentIndex);
-  });
-
-  document.getElementById("prevBtn").addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-    loadAudio(currentIndex);
-  });
-
-  audio.addEventListener("ended", () => {
-    currentIndex = (currentIndex + 1) % playlist.length;
-    loadAudio(currentIndex);
-  });
-
-  window.addEventListener("load", () => {
-    loadAudio(currentIndex);
-  });
-</script>
-  <!-- ======= Mobile nav toggle button ======= -->
+  <!-- Mobile nav toggle button -->
   <i class="bi bi-list mobile-nav-toggle d-lg-none"></i>
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex flex-column justify-content-center">
 
+  <!-- Header & Sleek Vertical Icon Navbar -->
+  <header id="header" class="d-flex flex-column justify-content-center">
     <nav id="navbar" class="navbar nav-menu">
       <ul>
         <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
         <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
         <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li>
         <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
+        <li><a href="#certification" class="nav-link scrollto"><i class="bx bx-award"></i> <span>Certifications</span></a></li>
         <li><a href="#games-tools" class="nav-link scrollto"><i class="bx bx-game"></i> <span>Games & Tools</span></a></li>
         <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li>
       </ul>
-    </nav><!-- .nav-menu -->
+    </nav>
+  </header>
 
-  </header><!-- End Header -->
-
-  <!-- ======= Hero Section ======= -->
+  <!-- Hero Section -->
   <section id="hero" class="d-flex flex-column justify-content-center">
-    <div class="container" data-aos="zoom-in" data-aos-delay="100">
+    <div class="hero-glow glow-1"></div>
+    <div class="hero-glow glow-2"></div>
+    
+    <div class="container hero-content" data-aos="zoom-in" data-aos-delay="100">
+      <div class="badge-status mb-3"><span class="pulsing-dot"></span> Available for Hiring</div>
       <h1>Ilham Bahri Albi</h1>
-      <p>I'm <span class="typed" data-typed-items="Web Programmer, Application Programmer, Software Engineering Teacher"></span></p>
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/ilham-bahri-04a91a21b/" class="linkedin" target="_blank"><i class="bx bxl-linkedin"></i></a>
-        <a href="https://github.com/IlhamBahri20050974059" class="github" target="_blank"><i class="bx bxl-github"></i></a>
+      <p>I am a <span class="typed" data-typed-items="Web Programmer, Application Programmer, Software Engineering Teacher"></span></p>
+      <div class="social-links mt-4 d-flex align-items-center flex-wrap gap-3">
+        <a href="https://www.linkedin.com/in/ilham-bahri-04a91a21b/" class="linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+        <a href="https://github.com/IlhamBahri20050974059" class="github" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="bx bxl-github"></i></a>
+        <a href="https://instagram.com/i28albi" class="instagram" target="_blank" rel="noopener noreferrer" aria-label="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="https://wa.me/+6287712153048" class="whatsapp" target="_blank" rel="noopener noreferrer" aria-label="whatsapp"><i class="bx bxl-whatsapp"></i></a>
+        <a href="https://drive.google.com/drive/folders/1nIpj13G7XzRsqM9kLeoPMFUMacdJnUBI?usp=sharing" class="drive" target="_blank" rel="noopener noreferrer" aria-label="drive"><i class="bx bxl-google"></i></a>
+        <a href="assets/pdf/ BAHRI ALBI.pdf" class="btn-download-cv" download>
+    CV
+  </a>
       </div>
     </div>
-  </section><!-- End Hero -->
+  </section>
 
   <main id="main">
 
-    <!-- ======= About Section ======= -->
+    <!-- About Section -->
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">
-
         <div class="section-title">
           <h2>About</h2>
-          <p>I am a Bachelor of Information Technology Education (Indonesian degree: S.Pd.) from Universitas Negeri Surabaya graduating with Very Satisfactory with a GPA of 3.63 after completing 62 courses (151 credits).</p>
+          <p>Bachelor of Information Technology Education (S.Pd.) from Universitas Negeri Surabaya, graduated status with Very Satisfactory status (GPA 3.63 / 151 Credits).</p>
         </div>
 
-        <div class="row">
-          <div class="col-lg-4">
-            <img src="assets/img/U300KB.png" class="img-fluid" alt="Ilham Bahri Albi">
+        <div class="row align-items-center">
+          <div class="col-lg-4 text-center">
+            <div class="img-wrapper mb-4 mb-lg-0">
+              <img src="assets/img/U300KB.png" class="img-fluid rounded-4 shadow-lg profile-img" alt="Ilham Bahri Albi">
+            </div>
           </div>
-          <div class="col-lg-8 pt-4 pt-lg-0 content">
-            <h3>Web & Application Programmer & Software Engineering Teacher.</h3>
-            <p class="fst-italic">
-              I have the ability to work individually and in teams, time discipline and a high willingness to learn.
+          <div class="col-lg-8 content">
+            <h3 class="gradient-text">Web & Application Programmer & Teacher.</h3>
+            <p class="fst-italic text-muted">
+              Passionate IT professional with strong adaptability, problem-solving skills, and a dedication to education and continuous technology exploration.
             </p>
-            <div class="row">
+            <div class="row mt-4">
               <div class="col-lg-6">
-                <ul>
+                <ul class="info-list">
                   <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong> <span>24</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>www.ilhambahri.rf.gd</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong> <span>+62 877 1215 8096</span></li>
@@ -160,187 +120,177 @@
                 </ul>
               </div>
               <div class="col-lg-6">
-                <ul>
+                <ul class="info-list">
                   <li><i class="bi bi-chevron-right"></i> <strong>Predicate:</strong> <span>Very Satisfactory</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>ilhambahri.20059@mhs.unesa.ac.id</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Department:</strong> <span>Computer Science</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Mayor:</strong> <span>Bachelor of Information Technology Education (Indonesian degree: S.Pd.)</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>Bachelor of IT Education (S.Pd.)</span></li>
                 </ul>
               </div>
             </div>
-            
+          </div>
         </div>
-
       </div>
-    </section><!-- End About Section -->
+    </section>
 
-    <!-- ======= Facts Section ======= -->
+    <!-- Facts Section -->
     <section id="facts" class="facts">
       <div class="container" data-aos="fade-up">
-
         <div class="section-title">
           <h2>Facts</h2>
-          <p>Some factual data of my lectures.</p>
+          <p>Milestones and empirical metrics achieved during academic and professional career.</p>
         </div>
 
-        <div class="row">
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="count-box">
+              <i class="bi bi-journal-check"></i>
+              <span data-purecounter-start="0" data-purecounter-end="62" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Courses Passed</p>
+            </div>
+          </div>
 
           <div class="col-lg-3 col-md-6">
             <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="62" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Courses</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
-            <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
+              <i class="bi bi-code-slash"></i>
               <span data-purecounter-start="0" data-purecounter-end="45" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
+              <p>Projects Developed</p>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+          <div class="col-lg-3 col-md-6">
             <div class="count-box">
-              <i class="bi bi-headset"></i>
+              <i class="bi bi-mortarboard"></i>
               <span data-purecounter-start="0" data-purecounter-end="151" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Credits</p>
+              <p>Academic Credits (SKS)</p>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+          <div class="col-lg-3 col-md-6">
             <div class="count-box">
               <i class="bi bi-award"></i>
               <span data-purecounter-start="0" data-purecounter-end="13" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Bootcamp</p>
+              <p>Certifications & Bootcamps</p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- Skills Section -->
+<section id="skills" class="skills section-bg">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+      <h2>Skills</h2>
+      <p>Technical proficiencies, programming languages, and pedagogical expertise.</p>
+    </div>
+
+    <div class="row skills-content">
+
+      <div class="col-lg-6">
+
+        <div class="progress">
+          <span class="skill">Laravel <i class="val">85%</i></span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;"></div>
+          </div>
+        </div>
+
+        <div class="progress">
+          <span class="skill">IT Support & Hardware <i class="val">80%</i></span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
+          </div>
+        </div>
+
+        <div class="progress">
+          <span class="skill">Node JS (REST API) <i class="val">75%</i></span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
+          </div>
+        </div>
+
+        <div class="progress">
+          <span class="skill">Android Java & Kotlin <i class="val">70%</i></span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"></div>
+          </div>
         </div>
 
       </div>
-    </section><!-- End Facts Section -->
 
-    <!-- ======= Skills Section ======= -->
-    <section id="skills" class="skills section-bg">
-      <div class="container" data-aos="fade-up">
+      <div class="col-lg-6">
 
-        <div class="section-title">
-          <h2>Skills</h2>
-          <p>Throughout my studies, I gained knowledge in teaching, web and application programming, multimedia, and networking. I also completed several programming courses to enhance my practical skills.</p>
+        <div class="progress">
+          <span class="skill">C++, C# & ASP.NET <i class="val">70%</i></span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"></div>
+          </div>
         </div>
 
-        <div class="row skills-content">
-
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill">Laravel<i class="val">85%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">IT Support<i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-
-            <div class="progress">
-              <span class="skill">Node JS(REST API)<i class="val">75%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Android Java & Kotlin <i class="val">70%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
+        <div class="progress">
+          <span class="skill">Software Testing & Debugging <i class="val">80%</i></span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
           </div>
+        </div>
 
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill">C++, C# & ASP.NET <i class="val">70%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Software Testing & Debugging <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Teaching <i class="val">85%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
-            <div class="progress">
-              <span class="skill">Administration <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>
-
+        <div class="progress">
+          <span class="skill">Teaching & Curriculum Design <i class="val">85%</i></span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;"></div>
           </div>
+        </div>
 
+        <div class="progress">
+          <span class="skill">Administration & Data Entry <i class="val">80%</i></span>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
+          </div>
         </div>
 
       </div>
-    </section><!-- End Skills Section -->
 
-    <!-- ======= Resume Section ======= -->
+    </div>
+
+  </div>
+</section>
+
+    <!-- Resume Section -->
     <section id="resume" class="resume">
       <div class="container" data-aos="fade-up">
-
         <div class="section-title">
           <h2>Resume</h2>
-          <p>Summary of my work experience and education.</p>
+          <p>Educational background and professional employment track record.</p>
         </div>
 
         <div class="row">
           <div class="col-lg-6">
-   
-            <h3 class="resume-title">Education</h3>
+            <h3 class="resume-title"><i class="bi bi-journal-bookmark me-2"></i>Education</h3>
             <div class="resume-item">
               <h4>Bachelor of Information Technology Education</h4>
               <h5>August 2020 - July 2026</h5>
               <p><em>Universitas Negeri Surabaya</em></p>
-              <p>GPA: 3.63/4.00. Studied various aspects of computer science including programming, networking, and multimedia.</p>
+              <p>GPA: 3.63/4.00. Completed comprehensive studies in computer science, software engineering, networking, and pedagogy.</p>
             </div>
             <div class="resume-item">
               <h4>Senior High School</h4>
               <h5>July 2017 - June 2020</h5>
               <p><em>SMAN 1 Menganti Gresik</em></p>
-              <p>Completed secondary education.</p>
+              <p>Graduated with strong academic foundation in science and mathematics.</p>
             </div>
           </div>
           <div class="col-lg-6">
-            <h3 class="resume-title">Professional Experience</h3>
+            <h3 class="resume-title"><i class="bi bi-briefcase me-2"></i>Professional Experience</h3>
             <div class="resume-item">
               <h4>Admin Staff</h4>
-              <h5>November 2025 - Januari 2026</h5>
+              <h5>November 2025 - January 2026</h5>
               <p><em>Herawati & Pinus Florist</em></p>
               <ul>
-                <li>Managed administrative tasks and customer order records</li>
-<li>Provided customer service both in-store and online professionally</li>
-<li>Operated computers for data entry, simple reports, and communication</li>
-<li>Organized order schedules and monitored flower stock availability</li>
-<li>Ensured orders matched customer requests accurately and on time</li>
+                <li>Managed administrative tasks and digital customer order records efficiently.</li>
+                <li>Operated desktop software for data management, financial reporting, and customer inquiries.</li>
+                <li>Monitored floral inventory and ensured on-time fulfillment of daily orders.</li>
               </ul>
             </div>
             <div class="resume-item">
@@ -348,10 +298,8 @@
               <h5>June 2024 - October 2024</h5>
               <p><em>Puncak Group</em></p>
               <ul>
-                <li>Successfully assisted in the organization and management of parking operations for over 1,000 vehicles.</li>
-                <li>Assisted in implementing new parking policies and procedures that improved efficiency and customer satisfaction.</li>
-                <li>Maintained accurate records and documentation of daily parking transactions, resulting in improved financial accountability.</li>
-                <li>Successfully managed daily parking operations for a busy parking facility, maintaining high levels of customer satisfaction and ensuring smooth traffic flow.</li>
+                <li>Coordinated operations and parking logistics for over 1,000+ daily vehicles.</li>
+                <li>Maintained accurate financial tracking and documentation of daily parking transactions.</li>
               </ul>
             </div>
             <div class="resume-item">
@@ -359,10 +307,8 @@
               <h5>August 2023 - November 2023</h5>
               <p><em>SMK Semen Gresik</em></p>
               <ul>
-                <li>Designed and implemented a comprehensive curriculum for teaching to high school students, resulting in a significant increase in student engagement and understanding.</li>
-                <li>Developed a hands-on learning approach for teaching computer concepts, resulting in students being able to create their own computer by the end of the course.</li>
-                <li>Organized and led workshops and bootcamps for student workshop to improve their knowledge and skills in building computer.</li>
-                <li>Mentored and coached individual students and groups in computer and network projects.</li>
+                <li>Designed interactive learning modules for vocational students in software engineering.</li>
+                <li>Instructed hands-on labs in computer assembly, troubleshooting, and basic programming.</li>
               </ul>
             </div>
             <div class="resume-item">
@@ -370,25 +316,21 @@
               <h5>February 2023 - July 2023</h5>
               <p><em>Quantum Leap</em></p>
               <ul>
-                <li>Developed new and innovative software features that improved usability and increased customer satisfaction.</li>
-                <li>Successfully debugged and resolved complex technical issues, resulting in a reduction of system downtime by 25%.</li>
-                <li>Collaborated with cross-functional teams to design and implement a new software system, leading to increased efficiency and cost saving.</li>
+                <li>Developed modular features for web applications and executed unit debugging.</li>
+                <li>Collaborated in agile software delivery workflows.</li>
               </ul>
             </div>
           </div>
         </div>
-
       </div>
-    </section><!-- End Resume Section -->
+    </section>
 
-    <!-- ======= Portfolio Section ======= -->
+    <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio section-bg">
       <div class="container" data-aos="fade-up">
-
         <div class="section-title">
           <h2>Portfolio</h2>
-          
-          <p>Some of the projects I have worked on.</p>
+          <p>Selection of software, web applications, and game development projects.</p>
         </div>
 
         <div class="row">
@@ -403,16 +345,15 @@
         </div>
 
         <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
           <div class="col-lg-4 col-md-6 portfolio-item filter-web">
             <div class="portfolio-wrap">
               <img src="assets/img/portfolio/portfolio-1.png" class="img-fluid" alt="Learning Management System">
               <div class="portfolio-info">
                 <h4>Learning Management System</h4>
-                <p>Web</p>
+                <p>Web Application</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Learning Management System"><i class="bx bx-plus"></i></a>
-                  <a href="https://learning.rf.gd" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://learning.rf.gd" target="_blank" rel="noopener noreferrer" title="Live Preview"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -420,13 +361,13 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item filter-web">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="Bookshelf API">
+              <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="Bookshelf APP & API">
               <div class="portfolio-info">
                 <h4>Bookshelf APP & API</h4>
-                <p>Web</p>
+                <p>Web REST API</p>
                 <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Bookshelf API"><i class="bx bx-plus"></i></a>
-                  <a href="https://github.com/IlhamBahri20050974059/BookshelfAPI" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Bookshelf APP & API"><i class="bx bx-plus"></i></a>
+                  <a href="https://github.com/IlhamBahri20050974059/BookshelfAPI" target="_blank" rel="noopener noreferrer" title="GitHub Code"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -436,11 +377,11 @@
             <div class="portfolio-wrap">
               <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="Library Book Borrowing Website">
               <div class="portfolio-info">
-                <h4>Library Book Borrowing Website</h4>
-                <p>Web</p>
+                <h4>Library Website</h4>
+                <p>Database Web</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Library Book Borrowing Website"><i class="bx bx-plus"></i></a>
-                  <a href="https://github.com/ilhambahri28/Pemrograman-Basis-Data" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://github.com/ilhambahri28/Pemrograman-Basis-Data" target="_blank" rel="noopener noreferrer" title="GitHub Code"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -448,14 +389,13 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item filter-web">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-4.png" class="img-fluid" alt="Bookshelf APP (Frontend)">
+              <img src="assets/img/portfolio/portfolio-4.png" class="img-fluid" alt="eTickets">
               <div class="portfolio-info">
-                <h4>eTickets</h4>
-                <p>Web</p>
+                <h4>eTickets System</h4>
+                <p>Web Application</p>
                 <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Bookshelf APP (Frontend)"><i class="bx bx-plus"></i></a>
-                  <!-- No GitHub link in CV, so leaving it as a placeholder -->
-                  <a href="https://github.com/IlhamBahri20050974059/Etickets.git" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="eTickets"><i class="bx bx-plus"></i></a>
+                  <a href="https://github.com/IlhamBahri20050974059/Etickets.git" target="_blank" rel="noopener noreferrer" title="GitHub Code"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -465,11 +405,11 @@
             <div class="portfolio-wrap">
               <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="Bangdaru APK">
               <div class="portfolio-info">
-                <h4>Bangdaru APK</h4>
-                <p>App</p>
+                <h4>Bangdaru Mobile APK</h4>
+                <p>Android Application</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Bangdaru APK"><i class="bx bx-plus"></i></a>
-                  <a href="https://drive.google.com/file/d/1ozJ5z0B1_Om-MaejuYffZQaj1fHCKdX4/view?usp=share_link" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://drive.google.com/file/d/1ozJ5z0B1_Om-MaejuYffZQaj1fHCKdX4/view?usp=share_link" target="_blank" rel="noopener noreferrer" title="Download APK"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -477,13 +417,13 @@
 
           <div class="col-lg-4 col-md-6 portfolio-item filter-game">
             <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="Game Menyusun Nama Hewan dalam bahasa jawa">
+              <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="Educational Game">
               <div class="portfolio-info">
-                <h4>Game Menyusun Nama Hewan dalam bahasa jawa</h4>
-                <p>Game</p>
+                <h4>Game Word Puzzle Jawa</h4>
+                <p>Educational Game</p>
                 <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Game Menyusun Nama Hewan dalam bahasa jawa"><i class="bx bx-plus"></i></a>
-                  <a href="https://drive.google.com/file/d/1mTRh4oPnHHm9aLufJmdHyJjHjWpFZUon/view?usp=drive_link" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Game Menyusun Nama Hewan (Bahasa Jawa)"><i class="bx bx-plus"></i></a>
+                  <a href="https://drive.google.com/file/d/1mTRh4oPnHHm9aLufJmdHyJjHjWpFZUon/view?usp=drive_link" target="_blank" rel="noopener noreferrer" title="Download Game"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -494,10 +434,10 @@
               <img src="assets/img/portfolio/findhiddenitems.png" class="img-fluid" alt="Find Hidden Items">
               <div class="portfolio-info">
                 <h4>Find Hidden Items</h4>
-                <p>Game</p>
+                <p>Roblox Game</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/findhiddenitems.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Find Hidden Items"><i class="bx bx-plus"></i></a>
-                  <a href="https://www.roblox.com/games/75061625762363/Find-Hidden-Items" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://www.roblox.com/games/75061625762363/Find-Hidden-Items" target="_blank" rel="noopener noreferrer" title="Play Game"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -507,53 +447,53 @@
             <div class="portfolio-wrap">
               <img src="assets/img/portfolio/ballgame.png" class="img-fluid" alt="Ball Game">
               <div class="portfolio-info">
-                <h4>Ball Game</h4>
-                <p>Game</p>
+                <h4>Ball Game 3D</h4>
+                <p>Roblox Game</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/ballgame.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Ball Game"><i class="bx bx-plus"></i></a>
-                  <a href="https://www.roblox.com/games/73587828650093/Ball-Game" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://www.roblox.com/games/73587828650093/Ball-Game" target="_blank" rel="noopener noreferrer" title="Play Game"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
           </div>
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
             <div class="portfolio-wrap">
               <img src="assets/img/portfolio/themediumobby.png" class="img-fluid" alt="The Medium Obby">
               <div class="portfolio-info">
                 <h4>The Medium Obby</h4>
-                <p>Game</p>
+                <p>Roblox Game</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/themediumobby.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="The Medium Obby"><i class="bx bx-plus"></i></a>
-                  <a href="https://www.roblox.com/games/83627947554105/Carry-Slap-The-Medium-Obby" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://www.roblox.com/games/83627947554105/Carry-Slap-The-Medium-Obby" target="_blank" rel="noopener noreferrer" title="Play Game"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
           </div>
 
-             <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
             <div class="portfolio-wrap">
               <img src="assets/img/portfolio/superracing.png" class="img-fluid" alt="Super Racing">
               <div class="portfolio-info">
                 <h4>Super Racing</h4>
-                <p>Game</p>
+                <p>Roblox Game</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/superracing.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Super Racing"><i class="bx bx-plus"></i></a>
-                  <a href="https://www.roblox.com/games/116445085951819/Super-Racing" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://www.roblox.com/games/116445085951819/Super-Racing" target="_blank" rel="noopener noreferrer" title="Play Game"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
           </div>
 
-<div class="col-lg-4 col-md-6 portfolio-item filter-game">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
             <div class="portfolio-wrap">
               <img src="assets/img/portfolio/lasertag.png" class="img-fluid" alt="Laser Tag">
               <div class="portfolio-info">
-                <h4>Laser Tag</h4>
-                <p>Game</p>
+                <h4>Laser Tag FPS</h4>
+                <p>Roblox Game</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/lasertag.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Laser Tag"><i class="bx bx-plus"></i></a>
-                  <a href="https://www.roblox.com/games/131503679476734/Laser-Tag" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://www.roblox.com/games/131503679476734/Laser-Tag" target="_blank" rel="noopener noreferrer" title="Play Game"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -564,402 +504,733 @@
               <img src="assets/img/portfolio/gunungapaya.png" class="img-fluid" alt="Gunung Apaya">
               <div class="portfolio-info">
                 <h4>Gunung Apaya</h4>
-                <p>Game</p>
+                <p>Roblox Game</p>
                 <div class="portfolio-links">
                   <a href="assets/img/portfolio/gunungapaya.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Gunung Apaya"><i class="bx bx-plus"></i></a>
-                  <a href="https://www.roblox.com/games/135824449239735/Under-Development-Gunung-apaya" target="_blank" title="Project Details"><i class="bx bx-link"></i></a>
+                  <a href="https://www.roblox.com/games/135824449239735/Under-Development-Gunung-apaya" target="_blank" rel="noopener noreferrer" title="Play Game"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certification Section -->
+<section id="certification" class="certification">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>Certifications & Badges</h2>
+      <p>Verified professional certifications, bootcamp completions, and technical credentials.</p>
+    </div>
+
+    <div class="row g-4">
+      <!--
+      <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-code-alt"></i></div>
+          <div class="cert-badge">Dicoding</div>
+          <h4>Belajar Dasarnya Pemrograman Web</h4>
+          <p class="issuer">Dicoding Indonesia</p>
+          <p class="cert-desc">Fundamentals of HTML, CSS, Responsive Layouts, and JavaScript for Modern Web Apps.</p>
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Verified</span>
+            <a href="assets/pdf/Sertifikat_Web_Dicoding.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bxl-android"></i></div>
+          <div class="cert-badge">Android</div>
+          <h4>Membuat Aplikasi Android untuk Pemula</h4>
+          <p class="issuer">Dicoding Indonesia</p>
+          <p class="cert-desc">Core concepts of Android Development with Kotlin/Java, Activities, and Intents.</p>
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Verified</span>
+            <a href="assets/pdf/Sertifikat_Android_Dicoding.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+-->
+      <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">KOMDIGI</div>
+          <h4>Intermediate Assistant Web Developer - Nasional</h4>
+          <p class="issuer">Pusat Pengembangan Talenta Digital</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Sertifikat_ILHAM BAHRI ALBI_Intermediate Assistant Web Developer - Nasional.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+<div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">KOMDIGI</div>
+          <h4>Junior Web Developer - Nasional</h4>
+          <p class="issuer">Pusat Pengembangan Talenta Digital</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Sertifikat_ILHAM BAHRI ALBI_Intermediate Junior Web Developer.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+<div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">CISCO</div>
+          <h4>ENGLISH For IT</h4>
+          <p class="issuer">CISCO NERTWORKING ACADEMY</p>
+      
+          <!--
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Sertifikat_ILHAM BAHRI ALBI_Intermediate Assistant Web Developer - Nasional.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div> 
+          -->
+        </div>
+      </div>
+
+<div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">DICODING</div>
+          <h4>Membuat Front-End Web untuk Pemula</h4>
+          <p class="issuer">DICODING</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/sertifikat front end web dicoding.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">DICODING</div>
+          <h4>Membuat Back-End Web untuk Pemula</h4>
+          <p class="issuer">DICODING</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/sertifikat_backend.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+<div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">DICODING</div>
+          <h4>Dasar Pemrograman JavaScript</h4>
+          <p class="issuer">DICODING</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Belajar Dasar Pemrograman JavaScript.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+<div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">DICODING</div>
+          <h4>Pemrograman Dengan Java</h4>
+          <p class="issuer">DICODING</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/sertifikat_JAVA.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+<div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">DICODING</div>
+          <h4>Prinsip Pemrograman SOLID</h4>
+          <p class="issuer">DICODING</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Sertifikat_SOLID.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+<div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">PROGATE</div>
+          <h4> Kursus HTML CSS</h4>
+          <p class="issuer">PROGATE</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Sertifikat HTML CSS-Progate_Ilham Bahri.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">PROGATE</div>
+          <h4>Kursus SQL</h4>
+          <p class="issuer">PROGATE</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Sertifikat Progate SQL.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">PROGATE</div>
+          <h4>Kursus Command Line</h4>
+          <p class="issuer">PROGATE</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Sertifikat Command Line-Progate_Ilham Bahri.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+<div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="bx bx-badge-check"></i></div>
+          <div class="cert-badge">PROGATE</div>
+          <h4>Kursus SASS</h4>
+          <p class="issuer">PROGATE</p>
+      
+          
+          <div class="cert-footer">
+            <span class="cert-date"><i class="bi bi-check-circle-fill me-1"></i> Certified</span>
+            <a href="assets/pdf/Sertifikat Sass-Progate_Ilham Bahri.pdf" target="_blank" rel="noopener noreferrer" class="cert-link">
+              <i class="bx bx-file-find"></i> Lihat File
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    <!-- Games & Tools Section -->
+    <section id="games-tools" class="portfolio">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>🎮 Interactive Mini Games & Tools 🧰</h2>
+          <p>Explore lightweight web apps, utilities, and interactive mini-games directly in your browser.</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+            <ul id="games-tools-filters">
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-game">Game</li>
+              <li data-filter=".filter-tool">Tool</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row games-tools-container" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
+              <img src="assets/img/puzzle.jpeg" class="img-fluid" alt="Puzzle">
+              <div class="portfolio-info">
+                <h4>Image Puzzle Game</h4>
+                <p>Interactive Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/puzzle.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Puzzle Game"><i class="bx bx-plus"></i></a>
+                  <a href="puzzle.html" target="_blank"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
           </div>
 
-
-        </div>
-
-      </div>
-    </section><!-- End Portfolio Section -->
-<!-- ======= Games & Tools Section ======= -->
-<section id="games-tools" class="portfolio section-bg">
-  <div class="container" data-aos="fade-up">
-
-    <div class="section-title">
-      <h2>🎮 Mini Games & Tools 🧰</h2>
-      <p>Play mini games and try out handy tools.</p>
-    </div>
- 
-    <div class="row">
-      <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
-        <ul id="games-tools-filters">
-          <li data-filter="*" class="filter-active">All</li>
-          <li data-filter=".filter-game">Game</li>
-          <li data-filter=".filter-tool">Tool</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="row games-tools-container" data-aos="fade-up" data-aos-delay="200">
-
-      <!-- Game Cards -->
-           <div class="col-lg-4 col-md-6 portfolio-item filter-game">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/rock-paper-scissors.jpeg" class="img-fluid" alt="Rock Paper Scissors">
-          <div class="portfolio-info">
-            <h4>Rock Paper Scissors</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/rock-paper-scissors.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Rock Paper Scissors"><i class="bx bx-plus"></i></a>
-              <a href="rock-paper-scissors.html"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 portfolio-item filter-game">
-        <div class="portfolio-wrap">
-          <img src="assets/img/puzzle.jpeg" class="img-fluid" alt="Puzzle">
-          <div class="portfolio-info">
-            <h4>Puzzle</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/puzzle.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Puzzle"><i class="bx bx-plus"></i></a>
-              <a href="puzzle.html" target="_blank"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-game">
-       <div class="portfolio-wrap">
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
               <img src="assets/img/reaction.jpg" class="img-fluid" alt="Race Start Reaction">
-          <div class="portfolio-info">
-            <h4>Race Start Reaction</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/reaction.jpg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Race Start Reaction"><i class="bx bx-plus"></i></a>
-              <a href="race-start-reaction.html" target="_blank"><i class="bx bx-link"></i></a>
+              <div class="portfolio-info">
+                <h4>Race Reaction Test</h4>
+                <p>Mini Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/reaction.jpg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Race Start Reaction"><i class="bx bx-plus"></i></a>
+                  <a href="race-start-reaction.html" target="_blank"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="col-lg-4 col-md-6 portfolio-item filter-game">
-        <div class="portfolio-wrap">
-          <img src="assets/img/tictactoe.jpeg" class="img-fluid" alt="Tic Tac Toe">
-          <div class="portfolio-info">
-            <h4>Tic Tac Toe</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/tictactoe.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Tic Tac Toe"><i class="bx bx-plus"></i></a>
-              <a href="tictactoe.html" target="_blank"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
+              <img src="assets/img/tictactoe.jpeg" class="img-fluid" alt="Tic Tac Toe">
+              <div class="portfolio-info">
+                <h4>Tic Tac Toe</h4>
+                <p>Classic Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/tictactoe.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Tic Tac Toe"><i class="bx bx-plus"></i></a>
+                  <a href="tictactoe.html" target="_blank"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="col-lg-4 col-md-6 portfolio-item filter-game">
-        <div class="portfolio-wrap">
-          <img src="assets/img/color-match.jpeg" class="img-fluid" alt="Color Match">
-          <div class="portfolio-info">
-            <h4>Color Match</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/color-match.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Color Match"><i class="bx bx-plus"></i></a>
-              <a href="color-match.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
+              <img src="assets/img/color-match.jpeg" class="img-fluid" alt="Color Match">
+              <div class="portfolio-info">
+                <h4>Color Match Challenge</h4>
+                <p>Puzzle Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/color-match.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Color Match"><i class="bx bx-plus"></i></a>
+                  <a href="color-match.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="col-lg-4 col-md-6 portfolio-item filter-game">
-        <div class="portfolio-wrap">
-          <img src="assets/img/memory-game.jpeg" class="img-fluid" alt="Memory Game">
-          <div class="portfolio-info">
-            <h4>Memory Game</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/memory-game.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Memory Game"><i class="bx bx-plus"></i></a>
-              <a href="memory-game.html" target="_blank"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
+              <img src="assets/img/memory-game.jpeg" class="img-fluid" alt="Memory Game">
+              <div class="portfolio-info">
+                <h4>Memory Card Match</h4>
+                <p>Brain Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/memory-game.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Memory Game"><i class="bx bx-plus"></i></a>
+                  <a href="memory-game.html" target="_blank"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/bmi-calculator.jpeg" class="img-fluid" alt="BMI Calculator">
-          <div class="portfolio-info">
-            <h4>BMI Calculator</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/bmi-calculator.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Typing Test"><i class="bx bx-plus"></i></a>
-              <a href="bmi-calculator.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/bmi-calculator.jpeg" class="img-fluid" alt="BMI Calculator">
+              <div class="portfolio-info">
+                <h4>BMI Calculator</h4>
+                <p>Health Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/bmi-calculator.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="BMI Calculator"><i class="bx bx-plus"></i></a>
+                  <a href="bmi-calculator.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-            <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/currency-converter.jpeg" class="img-fluid" alt="Currency Converter">
-          <div class="portfolio-info">
-            <h4>Currency Converter</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/currency-converter.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Typing Test"><i class="bx bx-plus"></i></a>
-              <a href="currency-converter.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/currency-converter.jpeg" class="img-fluid" alt="Currency Converter">
+              <div class="portfolio-info">
+                <h4>Currency Converter</h4>
+                <p>Financial Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/currency-converter.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Currency Converter"><i class="bx bx-plus"></i></a>
+                  <a href="currency-converter.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div class="col-lg-4 col-md-6 portfolio-item filter-game">
-        <div class="portfolio-wrap">
-          <img src="assets/img/number-guess.jpeg" class="img-fluid" alt="Number Guess">
-            <div class="portfolio-info">
-            <h4>Number Guess</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/number-guess.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Number Guess"><i class="bx bx-plus"></i></a>
-              <a href="number-guess.html" target="_blank"><i class="bx bx-link"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-lg-4 col-md-6 portfolio-item filter-game">
-        <div class="portfolio-wrap">
-          <img src="assets/img/word-guess.jpeg" class="img-fluid" alt="Word Guess">
-          <div class="portfolio-info">
-            <h4>Word Guess</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/word-guess.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Word Guess"><i class="bx bx-plus"></i></a>
-              <a href="word-guess.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
+              <img src="assets/img/number-guess.jpeg" class="img-fluid" alt="Number Guess">
+              <div class="portfolio-info">
+                <h4>Number Guessing</h4>
+                <p>Logic Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/number-guess.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Number Guess"><i class="bx bx-plus"></i></a>
+                  <a href="number-guess.html" target="_blank"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-<div class="col-lg-4 col-md-6 portfolio-item filter-game">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/ular-tangga.jpeg" class="img-fluid" alt="Snakes & Ladders">
-          <div class="portfolio-info">
-            <h4>Snakes & Ladders</h4>
-            <p>Game</p>
-            <div class="portfolio-links">
-              <a href="assets/img/ular-tangga.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Rock Paper Scissors"><i class="bx bx-plus"></i></a>
-              <a href="ulartangga.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
+              <img src="assets/img/word-guess.jpeg" class="img-fluid" alt="Word Guess">
+              <div class="portfolio-info">
+                <h4>Word Guessing Game</h4>
+                <p>Word Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/word-guess.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Word Guess"><i class="bx bx-plus"></i></a>
+                  <a href="word-guess.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Tool Cards -->
-
-<div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/dev-typing-test.jpeg" class="img-fluid" alt="Developer Typing Test">
-          <div class="portfolio-info">
-            <h4>Developer Typing Test</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/dev-typing-test.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Developer Typing Test"><i class="bx bx-plus"></i></a>
-              <a href="developer-typing-test.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/calculator.png" class="img-fluid" alt="Calculator">
+              <div class="portfolio-info">
+                <h4>Scientific Calculator</h4>
+                <p>Utility Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/calculator.png" data-gallery="toolsGallery" class="portfolio-lightbox" title="Calculator"><i class="bx bx-plus"></i></a>
+                  <a href="calculator.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/goldsim.jpeg" class="img-fluid" alt="Gold Simulator">
-          <div class="portfolio-info">
-            <h4>Gold Simulator</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/goldsim.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Gold Simulator"><i class="bx bx-plus"></i></a>
-              <a href="goldsim.html"><i class="bx bx-link"></i></a>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
+              <img src="assets/img/rock-paper-scissors.jpeg" class="img-fluid" alt="Rock Paper Scissors">
+              <div class="portfolio-info">
+                <h4>Rock Paper Scissors</h4>
+                <p>Casual Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/rock-paper-scissors.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Rock Paper Scissors"><i class="bx bx-plus"></i></a>
+                  <a href="rock-paper-scissors.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/simkredit.jpeg" class="img-fluid" alt="Simulator Kredit">
-          <div class="portfolio-info">
-            <h4>Simulator Kredit</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/simkredit.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Simulator Kredit"><i class="bx bx-plus"></i></a>
-              <a href="simkredit.html"><i class="bx bx-link"></i></a>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/typing-test.jpeg" class="img-fluid" alt="Typing Test">
+              <div class="portfolio-info">
+                <h4>WPM Typing Test</h4>
+                <p>Speed Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/typing-test.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Typing Test"><i class="bx bx-plus"></i></a>
+                  <a href="typing-test.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/calculator.png" class="img-fluid" alt="Calculator">
-          <div class="portfolio-info">
-            <h4>Calculator</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/calculator.png" data-gallery="gamesGallery" class="portfolio-lightbox" title="Calculator"><i class="bx bx-plus"></i></a>
-              <a href="calculator.html"><i class="bx bx-link"></i></a>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/dev-typing-test.jpeg" class="img-fluid" alt="Developer Typing Test">
+              <div class="portfolio-info">
+                <h4>Developer Code Typing</h4>
+                <p>Pro Speed Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/dev-typing-test.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Developer Typing Test"><i class="bx bx-plus"></i></a>
+                  <a href="developer-typing-test.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/typing-test.jpeg" class="img-fluid" alt="Typing Test">
-          <div class="portfolio-info">
-            <h4>Typing Test</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/typing-test.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Typing Test"><i class="bx bx-plus"></i></a>
-              <a href="typing-test.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/goldsim.jpeg" class="img-fluid" alt="Gold Simulator">
+              <div class="portfolio-info">
+                <h4>Gold Investment Sim</h4>
+                <p>Finance Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/goldsim.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Gold Simulator"><i class="bx bx-plus"></i></a>
+                  <a href="goldsim.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/password-generator-checker.jpeg" class="img-fluid" alt="Password Generator and checker">
-          <div class="portfolio-info">
-            <h4>Password Generator and Checker</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/password-generator-checker.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Password Generator and checker"><i class="bx bx-plus"></i></a>
-              <a href="password-generator-checker.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/simkredit.jpeg" class="img-fluid" alt="Simulator Kredit">
+              <div class="portfolio-info">
+                <h4>Loan Calculator Sim</h4>
+                <p>Finance Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/simkredit.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Simulator Kredit"><i class="bx bx-plus"></i></a>
+                  <a href="simkredit.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap" >
-          <img src="assets/img/unit-converter.jpeg" class="img-fluid" alt="Unit Converter">
-          <div class="portfolio-info">
-            <h4>Unit Converter</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/unit-converter.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Typing Test"><i class="bx bx-plus"></i></a>
-              <a href="unit-converter.html"><i class="bx bx-link"></i></a>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/password-generator-checker.jpeg" class="img-fluid" alt="Password Generator & Checker">
+              <div class="portfolio-info">
+                <h4>Password Security Checker</h4>
+                <p>Security Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/password-generator-checker.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Password Generator & Checker"><i class="bx bx-plus"></i></a>
+                  <a href="password-generator-checker.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      
 
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
-        <div class="portfolio-wrap">
-          <img src="assets/img/color-picker.jpeg" class="img-fluid" alt="Race Start Reaction">
-          <div class="portfolio-info">
-            <h4>Color Picker</h4>
-            <p>Tool</p>
-            <div class="portfolio-links">
-              <a href="assets/img/color-picker.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Color Picker"><i class="bx bx-plus"></i></a>
-              <a href="color-picker.html"><i class="bx bx-link"></i></a>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/unit-converter.jpeg" class="img-fluid" alt="Unit Converter">
+              <div class="portfolio-info">
+                <h4>Universal Unit Converter</h4>
+                <p>Utility Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/unit-converter.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Unit Converter"><i class="bx bx-plus"></i></a>
+                  <a href="unit-converter.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-tool">
+            <div class="portfolio-wrap">
+              <img src="assets/img/color-picker.jpeg" class="img-fluid" alt="Color Picker">
+              <div class="portfolio-info">
+                <h4>HEX/RGB Color Picker</h4>
+                <p>Design Tool</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/color-picker.jpeg" data-gallery="toolsGallery" class="portfolio-lightbox" title="Color Picker"><i class="bx bx-plus"></i></a>
+                  <a href="color-picker.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 portfolio-item filter-game">
+            <div class="portfolio-wrap">
+              <img src="assets/img/ular-tangga.jpeg" class="img-fluid" alt="Snakes & Ladders">
+              <div class="portfolio-info">
+                <h4>Snakes & Ladders</h4>
+                <p>Board Game</p>
+                <div class="portfolio-links">
+                  <a href="assets/img/ular-tangga.jpeg" data-gallery="gamesGallery" class="portfolio-lightbox" title="Snakes & Ladders"><i class="bx bx-plus"></i></a>
+                  <a href="ulartangga.html"><i class="bx bx-link"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<!-- End Games & Tools Section -->
+    </section>
 
-    <!-- ======= Contact Section ======= -->
+    <!-- Contact Section -->
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
-
         <div class="section-title">
           <h2>Contact</h2>
+          <p>Get in touch for software engineering inquiries, teaching collaborations, or hiring.</p>
         </div>
 
-        <div class="row mt-1">
-
-          <div class="col-lg-4">
-            <div class="info">
-              <div class="address">
+        <div class="row mt-1 justify-content-center">
+          <div class="col-lg-8">
+            <div class="info d-flex flex-wrap justify-content-around">
+              <div class="address my-2">
                 <i class="bi bi-geo-alt"></i>
                 <h4>Location:</h4>
                 <p>Gresik, Indonesia</p>
               </div>
 
-              <div class="email">
+              <div class="email my-2">
                 <i class="bi bi-envelope"></i>
                 <h4>Email:</h4>
                 <p>ilhambahri.20059@mhs.unesa.ac.id</p>
               </div>
 
-              <div class="phone">
+              <div class="phone my-2">
                 <i class="bi bi-phone"></i>
                 <h4>Call:</h4>
-                <p>+62 877-1215-3048</p>
+                <p>+62 877-1215-8096</p>
               </div>
-
             </div>
-
           </div>
-
-
-
         </div>
-
       </div>
-    </section><!-- End Contact Section -->
+    </section>
 
-  </main><!-- End #main -->
+  </main>
 
-  <!-- ======= Footer ======= -->
+  <!-- Footer -->
   <footer id="footer">
     <div class="container">
-      <h3>Ilham Bahri Albi</h3>
-      <p>A Computer Science graduate with strong enthusiasm for programming and teaching.</p>
+      <h3 class="gradient-text">Ilham Bahri Albi</h3>
+      <p>Building high-quality web applications & inspiring software engineering students.</p>
       <div class="social-links">
-        <!--
-         <a href="https://twitter.com/BahriAlbi" class="twitter" target="_blank"><i class="bx bxl-twitter"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=100005134004719" class="facebook" target="_blank"><i class="bx bxl-facebook"></i></a>
-        <a href="https://www.instagram.com/ilhambahri_a/" class="instagram" target="_blank"><i class="bx bxl-instagram"></i></a>
-        -->
-        <a href="https://www.linkedin.com/in/ilham-bahri-04a91a21b/" class="linkedin" target="_blank"><i class="bx bxl-linkedin"></i></a>
-        <a href="https://github.com/IlhamBahri20050974059" class="github" target="_blank"><i class="bx bxl-github"></i></a>
+        <a href="https://www.linkedin.com/in/ilham-bahri-04a91a21b/" class="linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+        <a href="https://github.com/IlhamBahri20050974059" class="github" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="bx bxl-github"></i></a>
+        <a href="https://instagram.com/i28albi" class="instagram" target="_blank" rel="noopener noreferrer" aria-label="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="https://wa.me/+6287712153048" class="whatsapp" target="_blank" rel="noopener noreferrer" aria-label="whatsapp"><i class="bx bxl-whatsapp"></i></a>
+        <a href="https://drive.google.com/drive/folders/1nIpj13G7XzRsqM9kLeoPMFUMacdJnUBI?usp=sharing" class="drive" target="_blank" rel="noopener noreferrer" aria-label="drive"><i class="bx bxl-google"></i></a>
+
       </div>
       <div class="copyright">
         &copy; Copyright <strong><span>Ilham Bahri Albi</span></strong>. All Rights Reserved
       </div>
     </div>
-  </footer><!-- End Footer -->
+  </footer>
 
   <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center" aria-label="Back to Top"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="https://cdn.jsdelivr.net/npm/purecounterjs@1.0.1/dist/purecounter_vanilla.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/waypoints/lib/noframework.waypoints.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-<script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
+  <!-- Accessibility Widget -->
+  <script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
+
+  <!-- Dynamic Scripts & Controls -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Scroll Progress Bar Tracking
+      const progressBar = document.getElementById("scroll-progress");
+      window.addEventListener("scroll", () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        if(progressBar) progressBar.style.width = scrolled + "%";
+      });
+
+      // 2. Music Player System
+      const playlist = [
+        { title: "Xanadu Next OST - Clover Ruins", src: "assets/audio/Xanadu Next OST - Clover Ruins.m4a" },
+        { title: "Xanadu Next OST - Harlech", src: "assets/audio/Xanadu Next OST - Harlech.m4a" },
+        { title: "Xanadu Next OST - La Valse Pour Xanadu", src: "assets/audio/Xanadu Next OST - La Valse Pour Xanadu.m4a" },
+        { title: "Xanadu Next OST - Trechier Woods", src: "assets/audio/Xanadu Next OST - Trechier Woods.m4a" },
+      ];
+
+      let currentIndex = 0;
+      const audio = document.getElementById("bgAudio");
+      const playerContainer = document.getElementById("floatingPlayer");
+      const playPauseBtn = document.getElementById("playPauseBtn");
+      const playIcon = playPauseBtn.querySelector("i");
+      const titleEl = document.getElementById("audioTitle");
+
+      function loadAudio(index, autoPlay = false) {
+        audio.src = playlist[index].src;
+        titleEl.textContent = playlist[index].title;
+        if (autoPlay) {
+          audio.play().then(() => {
+            playIcon.className = "bi bi-pause-fill";
+            playerContainer.classList.add("is-playing");
+          }).catch(() => {
+            playIcon.className = "bi bi-play-fill";
+            playerContainer.classList.remove("is-playing");
+          });
+        } else {
+          playIcon.className = "bi bi-play-fill";
+          playerContainer.classList.remove("is-playing");
+        }
+      }
+
+      playPauseBtn.addEventListener("click", () => {
+        if (audio.paused) {
+          audio.play().then(() => {
+            playIcon.className = "bi bi-pause-fill";
+            playerContainer.classList.add("is-playing");
+          }).catch((err) => console.log("Play blocked:", err));
+        } else {
+          audio.pause();
+          playIcon.className = "bi bi-play-fill";
+          playerContainer.classList.remove("is-playing");
+        }
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % playlist.length;
+        loadAudio(currentIndex, !audio.paused);
+      });
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+        loadAudio(currentIndex, !audio.paused);
+      });
+
+      audio.addEventListener("ended", () => {
+        currentIndex = (currentIndex + 1) % playlist.length;
+        loadAudio(currentIndex, true);
+      });
+
+      loadAudio(currentIndex, false);
+
+      // 3. Games & Tools Isotope Filtering
+      window.addEventListener('load', () => {
+        const gamesToolsContainer = document.querySelector('.games-tools-container');
+        if (gamesToolsContainer && typeof Isotope !== 'undefined') {
+          const isotope = new Isotope(gamesToolsContainer, {
+            itemSelector: '.portfolio-item',
+            layoutMode: 'fitRows'
+          });
+
+          const filterBtns = document.querySelectorAll('#games-tools-filters li');
+          filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+              filterBtns.forEach(el => el.classList.remove('filter-active'));
+              this.classList.add('filter-active');
+              isotope.arrange({ filter: this.getAttribute('data-filter') });
+            });
+          });
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
