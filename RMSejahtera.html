@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RM Padang Sejahtera - Cita Rasa Otentik Minang</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --maroon: #800000;
+      --maroon-dark: #5c0000;
+      --gold: #D4AF37;
+      --gold-light: #f3e5ab;
+      --dark: #111827;
+      --dark-card: #1f2937;
+      --cream: #fffbeb;
+      --green: #15803d;
+      --gray-text: #9ca3af;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+    body { background-color: var(--dark); color: #f3f4f6; overflow-x: hidden; }
+
+    /* Typography */
+    h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
+
+    /* Navigation */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--gold);
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--gold); }
+    .logo i { font-size: 1.8rem; }
+    .logo-text h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: 1px; color: var(--gold); }
+    .logo-text span { font-size: 0.65rem; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
+
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+    .nav-links a { color: #f3f4f6; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    .status-badge {
+      font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 20px;
+      background: rgba(21, 128, 61, 0.2); color: #4ade80; border: 1px solid #22c55e;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .status-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+    .cart-btn {
+      background: var(--gold); color: #000; border: none; padding: 0.6rem 1.2rem;
+      border-radius: 8px; font-weight: 700; cursor: pointer; display: flex;
+      align-items: center; gap: 0.5rem; transition: 0.2s; position: relative;
+    }
+    .cart-btn:hover { background: #b89628; }
+    .cart-count {
+      background: var(--maroon); color: #fff; font-size: 0.75rem;
+      width: 20px; height: 20px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 85vh;
+      background: linear-gradient(rgba(0,0,0,0.75), rgba(17,24,39,1)), url('https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?q=80&w=1600&auto=format&fit=crop') center/cover;
+      display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .hero-content { max-width: 800px; }
+    .hero-tag { color: var(--gold); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 1rem; }
+    .hero h2 { font-size: 3.2rem; color: #fff; margin-bottom: 1.2rem; line-height: 1.2; }
+    .hero p { color: #d1d5db; font-size: 1.1rem; margin-bottom: 2rem; font-weight: 300; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--maroon); color: #fff; border: 1px solid var(--gold); padding: 0.85rem 1.8rem; border-radius: 8px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+    .btn-primary:hover { background: var(--maroon-dark); transform: translateY(-2px); }
+    .btn-secondary { background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 0.85rem 1.8rem; border-radius: 8px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+    .btn-secondary:hover { background: rgba(212, 175, 55, 0.1); transform: translateY(-2px); }
+
+    /* Section Global */
+    section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-title { text-align: center; margin-bottom: 3rem; }
+    .section-title h2 { font-size: 2.2rem; color: var(--gold); margin-bottom: 0.5rem; }
+    .section-title p { color: var(--gray-text); font-size: 0.95rem; }
+
+    /* Menu Section */
+    .category-tabs { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+    .tab-btn {
+      background: var(--dark-card); color: #fff; border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.6rem 1.2rem; border-radius: 30px; cursor: pointer; font-size: 0.85rem; transition: 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover { background: var(--gold); color: #000; font-weight: 700; border-color: var(--gold); }
+
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+    .menu-card {
+      background: var(--dark-card); border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 12px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column;
+    }
+    .menu-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+    .menu-img { width: 100%; height: 180px; object-fit: cover; }
+    .menu-info { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .menu-info h3 { font-size: 1.1rem; color: #fff; margin-bottom: 0.4rem; }
+    .menu-info p { color: var(--gray-text); font-size: 0.8rem; margin-bottom: 1rem; line-height: 1.4; }
+    .menu-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+    .menu-price { color: var(--gold); font-weight: 700; font-size: 1.05rem; }
+    .btn-add { background: var(--maroon); color: #fff; border: none; padding: 0.5rem 0.9rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: 0.2s; }
+    .btn-add:hover { background: var(--maroon-dark); }
+
+    /* Custom Nasi Bungkus Builder */
+    .builder-card {
+      background: linear-gradient(145deg, #1f2937, #111827);
+      border: 2px solid var(--gold); border-radius: 16px; padding: 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
+    }
+    @media (max-width: 768px) { .builder-card { grid-template-columns: 1fr; } nav { padding: 1rem; } }
+    .builder-options h3 { color: var(--gold); margin-bottom: 1rem; }
+    .option-group { margin-bottom: 1.2rem; }
+    .option-group label { display: block; font-size: 0.85rem; color: var(--gray-text); margin-bottom: 0.4rem; }
+    .option-group select {
+      width: 100%; padding: 0.75rem; background: var(--dark); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px; color: #fff; outline: none;
+    }
+    .preview-box {
+      background: var(--dark); border: 1px dashed var(--gold); border-radius: 12px;
+      padding: 1.5rem; text-align: center;
+    }
+    .preview-box h4 { color: var(--gold); margin-bottom: 1rem; font-size: 1.2rem; }
+    .preview-list { list-style: none; text-align: left; font-size: 0.9rem; margin-bottom: 1.5rem; color: #d1d5db; }
+    .preview-list li { margin-bottom: 0.5rem; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.3rem; }
+
+    /* Tentang Kami */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-img { width: 100%; border-radius: 12px; border: 2px solid var(--gold); }
+    .about-text h3 { font-size: 2rem; color: var(--gold); margin-bottom: 1rem; }
+    .about-text p { color: #d1d5db; line-height: 1.7; font-size: 0.95rem; margin-bottom: 1rem; }
+
+    /* Testimoni */
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .testi-card { background: var(--dark-card); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1.5rem; }
+    .stars { color: var(--gold); margin-bottom: 0.75rem; }
+    .testi-card p { font-size: 0.85rem; color: #d1d5db; line-height: 1.5; font-style: italic; margin-bottom: 1rem; }
+    .testi-author { font-weight: 700; font-size: 0.9rem; color: var(--gold); }
+
+    /* Drawer Keranjang & Checkout Form */
+    .cart-drawer {
+      position: fixed; top: 0; right: -420px; width: 100%; max-width: 420px; height: 100vh;
+      background: var(--dark-card); border-left: 2px solid var(--gold); z-index: 200;
+      transition: 0.3s ease-in-out; display: flex; flex-direction: column;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+    }
+    .cart-drawer.open { right: 0; }
+    .cart-header { padding: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
+    .cart-header h3 { color: var(--gold); }
+    .close-cart { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+    .cart-body { padding: 1.2rem; flex: 1; overflow-y: auto; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .cart-item-title { font-size: 0.9rem; font-weight: 600; color: #fff; }
+    .cart-item-price { font-size: 0.8rem; color: var(--gold); }
+    .qty-controls { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.3rem; }
+    .qty-btn { background: var(--dark); color: #fff; border: 1px solid var(--gray-text); width: 22px; height: 22px; border-radius: 4px; cursor: pointer; }
+
+    /* Form Pemesanan */
+    .checkout-form { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1rem; }
+    .form-group { margin-bottom: 0.8rem; }
+    .form-group label { display: block; font-size: 0.75rem; color: var(--gray-text); margin-bottom: 0.25rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 0.55rem; background: var(--dark); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px; color: #fff; font-size: 0.85rem; outline: none;
+    }
+    .radio-group { display: flex; gap: 1rem; margin-top: 0.3rem; }
+    .radio-group label { display: flex; align-items: center; gap: 0.3rem; font-size: 0.85rem; color: #fff; cursor: pointer; }
+
+    .cart-footer { padding: 1.2rem; border-top: 1px solid rgba(255,255,255,0.1); background: var(--dark); }
+    .total-row { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; color: var(--gold); margin-bottom: 1rem; }
+    .btn-wa { width: 100%; background: var(--green); color: #fff; border: none; padding: 0.85rem; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 0.5rem; }
+    .btn-wa:hover { background: #166534; }
+
+    /* Overlay Background */
+    .overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 150; display: none; }
+    .overlay.open { display: block; }
+
+    /* Footer */
+    footer { background: #0b0f17; border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 3rem 2rem 1.5rem; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .footer-col h4 { color: var(--gold); margin-bottom: 1rem; font-size: 1.1rem; }
+    .footer-col p, .footer-col li { color: var(--gray-text); font-size: 0.85rem; line-height: 1.6; list-style: none; }
+    .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+    .social-links a { color: var(--gold); font-size: 1.2rem; transition: 0.2s; }
+    .social-links a:hover { color: #fff; }
+    .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; font-size: 0.8rem; color: var(--gray-text); }
+
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#" class="logo">
+      <i class="fa-solid fa-utensils"></i>
+      <div class="logo-text">
+        <h1>SEJAHTERA</h1>
+        <span>Rumah Makan Padang</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#hero">Beranda</a></li>
+      <li><a href="#menu">Katalog Menu</a></li>
+      <li><a href="#builder">Nasi Bungkus</a></li>
+      <li><a href="#about">Tentang Kami</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+
+    <div style="display: flex; gap: 1rem; align-items: center;">
+      <div class="status-badge">
+        <span class="status-dot"></span> Buka Sekarang
+      </div>
+      <button class="cart-btn" onclick="toggleCart()">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">Otentik Sejak 1988</div>
+      <h2>Cita Rasa Rempah Minang, Warisan Resep Leluhur</h2>
+      <p>Menyajikan kehangatan hidangan khas Sumatera Barat dengan bahan baku segar dan racikan rempah pilihan.</p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn-primary">Lihat Menu Utama</a>
+        <a href="#builder" class="btn-secondary">Custom Nasi Bungkus</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Catalog -->
+  <section id="menu">
+    <div class="section-title">
+      <h2>Katalog Hidangan Utama</h2>
+      <p>Pilih lauk pauk favoritmu dan tambahkan langsung ke keranjang belanja</p>
+    </div>
+
+    <div class="category-tabs">
+      <button class="tab-btn active" onclick="filterMenu('all', this)">Semua Menu</button>
+      <button class="tab-btn" onclick="filterMenu('daging', this)">Rendang & Daging</button>
+      <button class="tab-btn" onclick="filterMenu('ayam', this)">Ayam</button>
+      <button class="tab-btn" onclick="filterMenu('seafood', this)">Seafood</button>
+      <button class="tab-btn" onclick="filterMenu('minuman', this)">Minuman</button>
+    </div>
+
+    <div class="menu-grid" id="menuContainer"></div>
+  </section>
+
+  <!-- Custom Nasi Bungkus Builder -->
+  <section id="builder">
+    <div class="section-title">
+      <h2>Racik Nasi Bungkus Custom</h2>
+      <p>Sesuaikan porsi Nasi Bungkus favoritmu secara interaktif</p>
+    </div>
+
+    <div class="builder-card">
+      <div class="builder-options">
+        <h3>Pilihan Komponen</h3>
+        
+        <div class="option-group">
+          <label>Pilih Jenis Nasi</label>
+          <select id="selectNasi" onchange="updateBuilder()">
+            <option value="Nasi Putih|6000">Nasi Putih (Rp 6.000)</option>
+            <option value="Nasi Kuning Minang|8000">Nasi Kuning Minang (Rp 8.000)</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label>Pilih Lauk Utama</label>
+          <select id="selectLauk" onchange="updateBuilder()">
+            <option value="Rendang Daging Sapi|22000">Rendang Daging Sapi (Rp 22.000)</option>
+            <option value="Ayam Pop|20000">Ayam Pop (Rp 20.000)</option>
+            <option value="Cincang Daging|22000">Cincang Daging (Rp 22.000)</option>
+            <option value="Telur Dadar Padang|12000">Telur Dadar Padang (Rp 12.000)</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label>Pilih Sayur / Kuah</label>
+          <select id="selectSayur" onchange="updateBuilder()">
+            <option value="Sayur Nangka & Daun Singkong|5000">Sayur Nangka & Daun Singkong (Rp 5.000)</option>
+            <option value="Gulai Kapit|5000">Gulai Kapit (Rp 5.000)</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label>Pilih Sambal</label>
+          <select id="selectSambal" onchange="updateBuilder()">
+            <option value="Sambal Hijau (Lado Mudo)|3000">Sambal Hijau / Lado Mudo (Rp 3.000)</option>
+            <option value="Sambal Merah Balado|3000">Sambal Merah Balado (Rp 3.000)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="preview-box">
+        <h4>Ringkasan Racikan</h4>
+        <ul class="preview-list" id="builderPreview"></ul>
+        <div style="font-size: 1.2rem; font-weight: 700; color: var(--gold); margin-bottom: 1rem;" id="builderTotal">Rp 0</div>
+        <button class="btn-primary" style="width: 100%; border: none; cursor: pointer;" onclick="addCustomToCart()">
+          <i class="fa-solid fa-plus"></i> Tambahkan Nasi Bungkus ke Keranjang
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tentang Kami -->
+  <section id="about">
+    <div class="about-grid">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop" alt="Suasana Restoran Padang" class="about-img">
+      <div class="about-text">
+        <h3>Warisan Cita Rasa Minangkabau</h3>
+        <p>Berdiri sejak tahun 1988, Rumah Makan Padang Sejahtera terus berkomitmen menjaga keautentikan resep tradisional. Kami mendatangkan rempah-rempah langsung dari Sumatera Barat untuk menghasilkan aroma dan citarasa yang kaya.</p>
+        <p>Setiap hidangan dimasak secara bertahap saban hari dengan santan murni dan daging pilihan, menjamin kesegaran mutu hidangan yang disajikan di meja makan Anda.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimoni Pelanggan -->
+  <section>
+    <div class="section-title">
+      <h2>Kata Pelanggan Kami</h2>
+      <p>Pengalaman kuliner memuaskan dari para pengunjung setia</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p>"Rendang dan Ayam Pop-nya benar-benar otentik! Daging lembut, bumbu meresap sempurna. Pengiriman untuk makan siang kantor selalu cepat."</p>
+        <div class="testi-author">Budi Santoso</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p>"Fitur pesanan Nasi Bungkus custom sangat membantu saat memesan catering acara keluarga. Sambal Lado Mudo-nya mantap sekali!"</p>
+        <div class="testi-author">Siti Rahmawati</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <p>"Suasana nyaman untuk makan ditempat bersama tim kerja. Gulai Kepala Ikan Kakap-nya tidak amis sama sekali. Recommended!"</p>
+        <div class="testi-author">Hendrik Wijaya</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Drawer & Checkout Form -->
+  <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3><i class="fa-solid fa-bag-shopping"></i> Keranjang Pesanan</h3>
+      <button class="close-cart" onclick="toggleCart()">&times;</button>
+    </div>
+
+    <div class="cart-body">
+      <div id="cartItemsContainer"></div>
+
+      <!-- Checkout Form -->
+      <div class="checkout-form">
+        <h4 style="color: var(--gold); margin-bottom: 0.8rem; font-size: 0.95rem;">Detail Pemesanan</h4>
+        
+        <div class="form-group">
+          <label>Nama Pemesan *</label>
+          <input type="text" id="custName" placeholder="Contoh: Budi">
+        </div>
+
+        <div class="form-group">
+          <label>Tipe Pesanan</label>
+          <div class="radio-group">
+            <label><input type="radio" name="orderType" value="Makan di Tempat" checked onchange="toggleOrderType()"> Makan di Tempat</label>
+            <label><input type="radio" name="orderType" value="Dikirim" onchange="toggleOrderType()"> Dikirim (Delivery)</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Waktu (Jam & Tanggal) *</label>
+          <input type="text" id="custTime" placeholder="Contoh: Hari ini, Jam 12:30 WIB">
+        </div>
+
+        <div class="form-group" id="addressGroup" style="display: none;">
+          <label>Alamat Pengiriman Lengkap *</label>
+          <textarea id="custAddress" rows="2" placeholder="Masukkan alamat lengkap pengiriman"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Catatan Tambahan</label>
+          <input type="text" id="custNotes" placeholder="Contoh: Sambal dipisah, porsi nasi diperbanyak">
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <div class="total-row">
+        <span>Total:</span>
+        <span id="cartTotal">Rp 0</span>
+      </div>
+      <button class="btn-wa" onclick="sendToWhatsApp()">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Pesan via WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer & Contacts -->
+  <footer id="contact">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>RM Padang Sejahtera</h4>
+        <p>Jl. M H Thamrin No. 45, Jakarta Pusat</p>
+        <p>Jam Operasional: 09:00 - 22:00 WIB</p>
+      </div>
+      <div class="footer-col">
+        <h4>Hubungi Kami</h4>
+        <p><i class="fa-brands fa-whatsapp"></i> +62 877-1215-3048</p>
+        <p><i class="fa-solid fa-phone"></i> (021) 555-7890</p>
+        <p><i class="fa-solid fa-envelope"></i> kontak@padangsejahtera.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Media Sosial</h4>
+        <div class="social-links">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Rumah Makan Padang Sejahtera. All rights reserved. Portfolio Web Project.
+    </div>
+  </footer>
+
+  <script>
+    // Data Menu Utama
+    const menuData = [
+      { id: 1, name: "Rendang Daging Sapi", category: "daging", price: 28000, desc: "Daging sapi pilihan dimasak santan dan rempah khas Minang selama 8 jam.", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?q=80&w=500&auto=format&fit=crop" },
+      { id: 2, name: "Dendeng Batokok", category: "daging", price: 30000, desc: "Daging sapi pipih dipukul empuk disiram cabai merah segar.", img: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=500&auto=format&fit=crop" },
+      { id: 3, name: "Ayam Pop Otentik", category: "ayam", price: 25000, desc: "Ayam rebus bumbu rempah khas dilumuri minyak panas dengan sambal tomat.", img: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=500&auto=format&fit=crop" },
+      { id: 4, name: "Ayam Gulai", category: "ayam", price: 24000, desc: "Potongan ayam empuk dalam kuah gulai kuning gurih kaya rempah.", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=500&auto=format&fit=crop" },
+      { id: 5, name: "Gulai Kepala Ikan Kakap", category: "seafood", price: 55000, desc: "Kepala ikan kakap segar dalam kuah gulai asam pedas istimewa.", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=500&auto=format&fit=crop" },
+      { id: 6, name: "Udang Balado", category: "seafood", price: 32000, desc: "Udang galah segar tumis balado cabai merah renyah.", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?q=80&w=500&auto=format&fit=crop" },
+      { id: 7, name: "Es Teh Talua", category: "minuman", price: 15000, desc: "Minuman kesehatan khas Minang kocokan telur, teh hitam, dan perasan jeruk nipis.", img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=500&auto=format&fit=crop" },
+      { id: 8, name: "Es Jeruk Peras", category: "minuman", price: 10000, desc: "Kesegaran perasan jeruk murni dingin menyegarkan.", img: "https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=500&auto=format&fit=crop" }
+    ];
+
+    let cart = [];
+
+    function formatIDR(amount) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(amount);
+    }
+
+    // Render Katalog Menu
+    function renderMenu(category = 'all') {
+      const container = document.getElementById('menuContainer');
+      container.innerHTML = '';
+
+      const filtered = category === 'all' ? menuData : menuData.filter(m => m.category === category);
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'menu-card';
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" class="menu-img">
+          <div class="menu-info">
+            <div>
+              <h3>${item.name}</h3>
+              <p>${item.desc}</p>
+            </div>
+            <div class="menu-bottom">
+              <span class="menu-price">${formatIDR(item.price)}</span>
+              <button class="btn-add" onclick="addToCart(${item.id})">+ Tambah</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterMenu(cat, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMenu(cat);
+    }
+
+    // Builder Nasi Bungkus Custom
+    function updateBuilder() {
+      const nasi = document.getElementById('selectNasi').value.split('|');
+      const lauk = document.getElementById('selectLauk').value.split('|');
+      const sayur = document.getElementById('selectSayur').value.split('|');
+      const sambal = document.getElementById('selectSambal').value.split('|');
+
+      const total = parseInt(nasi[1]) + parseInt(lauk[1]) + parseInt(sayur[1]) + parseInt(sambal[1]);
+
+      const preview = document.getElementById('builderPreview');
+      preview.innerHTML = `
+        <li><span>${nasi[0]}</span><span>${formatIDR(parseInt(nasi[1]))}</span></li>
+        <li><span>${lauk[0]}</span><span>${formatIDR(parseInt(lauk[1]))}</span></li>
+        <li><span>${sayur[0]}</span><span>${formatIDR(parseInt(sayur[1]))}</span></li>
+        <li><span>${sambal[0]}</span><span>${formatIDR(parseInt(sambal[1]))}</span></li>
+      `;
+
+      document.getElementById('builderTotal').innerText = formatIDR(total);
+    }
+
+    function addCustomToCart() {
+      const nasi = document.getElementById('selectNasi').value.split('|');
+      const lauk = document.getElementById('selectLauk').value.split('|');
+      const sayur = document.getElementById('selectSayur').value.split('|');
+      const sambal = document.getElementById('selectSambal').value.split('|');
+
+      const total = parseInt(nasi[1]) + parseInt(lauk[1]) + parseInt(sayur[1]) + parseInt(sambal[1]);
+      const name = `Nasi Bungkus Custom (${lauk[0]})`;
+
+      const existing = cart.find(i => i.name === name);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: 'custom-' + Date.now(), name: name, price: total, qty: 1 });
+      }
+
+      updateCartUI();
+      toggleCart();
+    }
+
+    // Manajemen Keranjang Belanja
+    function addToCart(id) {
+      const item = menuData.find(m => m.id === id);
+      const existing = cart.find(i => i.id === id);
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: item.id, name: item.name, price: item.price, qty: 1 });
+      }
+
+      updateCartUI();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => i.id !== id);
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const container = document.getElementById('cartItemsContainer');
+      const countEl = document.getElementById('cartCount');
+      const totalEl = document.getElementById('cartTotal');
+
+      container.innerHTML = '';
+      let total = 0;
+      let totalQty = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="color: var(--gray-text); text-align: center; padding: 2rem 0;">Keranjang belanja masih kosong.</p>';
+      } else {
+        cart.forEach(item => {
+          total += item.price * item.qty;
+          totalQty += item.qty;
+
+          const div = document.createElement('div');
+          div.className = 'cart-item';
+          div.innerHTML = `
+            <div>
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-price">${formatIDR(item.price)}</div>
+              <div class="qty-controls">
+                <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
+                <span style="font-size: 0.85rem;">${item.qty}</span>
+                <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+              </div>
+            </div>
+            <div style="font-weight: 700; font-size: 0.9rem;">${formatIDR(item.price * item.qty)}</div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      countEl.innerText = totalQty;
+      totalEl.innerText = formatIDR(total);
+    }
+
+    function toggleCart() {
+      document.getElementById('cartDrawer').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('open');
+    }
+
+    function toggleOrderType() {
+      const type = document.querySelector('input[name="orderType"]:checked').value;
+      const addrGroup = document.getElementById('addressGroup');
+      if (type === 'Dikirim') {
+        addrGroup.style.display = 'block';
+      } else {
+        addrGroup.style.display = 'none';
+      }
+    }
+
+    // Integrasi Eksekusi Format WhatsApp
+    function sendToWhatsApp() {
+      if (cart.length === 0) return alert('Keranjang belanja kamu masih kosong!');
+
+      const name = document.getElementById('custName').value.trim();
+      const time = document.getElementById('custTime').value.trim();
+      const type = document.querySelector('input[name="orderType"]:checked').value;
+      const address = document.getElementById('custAddress').value.trim();
+      const notes = document.getElementById('custNotes').value.trim();
+
+      if (!name) return alert('Mohon isi nama kamu.');
+      if (!time) return alert('Mohon isi waktu pemesanan/kedatangan.');
+      if (type === 'Dikirim' && !address) return alert('Mohon isi alamat pengiriman lengkap.');
+
+      let total = 0;
+      let orderItemsText = "";
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        orderItemsText += `${index + 1}. ${item.name} (x${item.qty}) - ${formatIDR(itemTotal)}\n`;
+      });
+
+      let text = `*HALO RM PADANG SEJAHTERA*\n`;
+      text += `Saya ingin memesan hidangan dengan rincian berikut:\n\n`;
+      text += `*DATA PEMESANAN*\n`;
+      text += `• Nama: ${name}\n`;
+      text += `• Tipe Pesanan: ${type}\n`;
+      text += `• Waktu: ${time}\n`;
+      if (type === 'Dikirim') text += `• Alamat Pengiriman: ${address}\n`;
+      if (notes) text += `• Catatan: ${notes}\n`;
+      text += `\n*RINCIAN MENU*\n${orderItemsText}\n`;
+      text += `*TOTAL PEMBAYARAN: ${formatIDR(total)}*\n\n`;
+      text += `Mohon diproses pesanan saya. Terima kasih!`;
+
+      const targetPhone = "6287712153048";
+      const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(text)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    // Inisialisasi awal
+    renderMenu();
+    updateBuilder();
+  </script>
+</body>
+</html>
