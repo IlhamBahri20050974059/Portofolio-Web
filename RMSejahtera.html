@@ -197,6 +197,172 @@
     .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; font-size: 0.8rem; color: var(--gray-text); }
 
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+
+    /* Floating Button */
+  .sipadang-toggle-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--maroon);
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .sipadang-toggle-btn:hover {
+    transform: scale(1.08);
+  }
+
+  /* Container Window Chat */
+  .sipadang-window {
+    position: fixed;
+    bottom: 95px;
+    right: 25px;
+    width: 360px;
+    height: 500px;
+    max-width: calc(100vw - 40px);
+    background: #1e293b;
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 999;
+  }
+
+  .sipadang-window.active {
+    display: flex;
+  }
+
+  /* Header Chat */
+  .sipadang-header {
+    background: var(--maroon);
+    padding: 0.9rem 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .sipadang-header-info {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .sipadang-header-info i {
+    font-size: 1.3rem;
+    color: var(--gold);
+  }
+
+  .sipadang-header-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+  }
+
+  .sipadang-header-status {
+    font-size: 0.7rem;
+    color: var(--gold);
+  }
+
+  .sipadang-close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  /* Body Chat */
+  .sipadang-body {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #0f172a;
+  }
+
+  .sipadang-msg {
+    max-width: 82%;
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .sipadang-msg.bot {
+    background: #1e293b;
+    color: #f8fafc;
+    align-self: flex-start;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-bottom-left-radius: 2px;
+  }
+
+  .sipadang-msg.user {
+    background: var(--maroon);
+    color: #fff;
+    align-self: flex-end;
+    border: 1px solid var(--gold);
+    border-bottom-right-radius: 2px;
+  }
+
+  .sipadang-typing {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-style: italic;
+    display: none;
+    padding-left: 0.5rem;
+  }
+
+  /* Footer Input */
+  .sipadang-footer {
+    padding: 0.75rem;
+    background: #1e293b;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .sipadang-footer input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.85rem;
+    outline: none;
+  }
+
+  .sipadang-footer input:focus {
+    border-color: var(--gold);
+  }
+
+  .sipadang-send-btn {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  }
   </style>
 </head>
 <body>
@@ -438,7 +604,37 @@
       &copy; 2026 Rumah Makan Padang Sejahtera. All rights reserved. Portfolio Web Project.
     </div>
   </footer>
+<button class="sipadang-toggle-btn" onclick="toggleSiPadangChat()">
+  <i class="fa-solid fa-headset"></i>
+</button>
 
+<!-- Window Box Chatbot -->
+<div class="sipadang-window" id="sipadangWindow">
+  <div class="sipadang-header">
+    <div class="sipadang-header-info">
+      <i class="fa-solid fa-robot"></i>
+      <div>
+        <div class="sipadang-header-title">SiPadang AI</div>
+        <div class="sipadang-header-status">🟢 CS RM Padang Sejahtera</div>
+      </div>
+    </div>
+    <button class="sipadang-close-btn" onclick="toggleSiPadangChat()">&times;</button>
+  </div>
+
+  <div class="sipadang-body" id="sipadangBody">
+    <div class="sipadang-msg bot">
+      Rancak Bana! Halo Uda/Uni, ada yang bisa SiPadang bantu seputar menu, harga, atau lokasi hari ini?
+    </div>
+  </div>
+  <div class="sipadang-typing" id="sipadangTyping">SiPadang sedang mengetik...</div>
+
+  <div class="sipadang-footer">
+    <input type="text" id="sipadangInput" placeholder="Tanyakan lokasi, menu..." onkeypress="handleSiPadangKey(event)">
+    <button class="sipadang-send-btn" onclick="sendSiPadangMessage()">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </div>
+</div>
   <script>
     // Data Menu Utama
     const menuData = [
@@ -652,6 +848,100 @@
     // Inisialisasi awal
     renderMenu();
     updateBuilder();
+
+    let chatHistory = []; // Memori obrolan sementara di browser
+
+async function sendMessageToSiPadang(userText) {
+  // 1. Simpan pesan user ke history lokal
+  chatHistory.push({ sender: 'user', message: userText });
+
+  try {
+    const response = await fetch('http://localhost:5000/api/sipadang/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: userText,
+        history: chatHistory.slice(0, -1) // Kirim history sebelumnya
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      const botReply = data.reply;
+      // 2. Simpan balasan bot ke history lokal
+      chatHistory.push({ sender: 'bot', message: botReply });
+      return botReply;
+    } else {
+      return 'Maaf Uda/Uni, SiPadang sedang tidak bisa merespons.';
+    }
+  } catch (err) {
+    console.error('Connection error:', err);
+    return 'Gagal terhubung ke server SiPadang. Pastikan backend Node.js berjalan.';
+  }
+}
+
+let sipadangHistory = [];
+  const BACKEND_URL = 'https://si-padang-chatbot-api.vercel.app/api/sipadang/chat';
+
+  function toggleSiPadangChat() {
+    const chatWin = document.getElementById('sipadangWindow');
+    chatWin.classList.toggle('active');
+  }
+
+  function appendSiPadangMsg(sender, text) {
+    const body = document.getElementById('sipadangBody');
+    const msg = document.createElement('div');
+    msg.className = `sipadang-msg ${sender}`;
+    msg.innerText = text;
+    body.appendChild(msg);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  async function sendSiPadangMessage() {
+    const input = document.getElementById('sipadangInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    appendSiPadangMsg('user', text);
+    input.value = '';
+
+    const typing = document.getElementById('sipadangTyping');
+    typing.style.display = 'block';
+
+    try {
+      const response = await fetch(BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          history: sipadangHistory
+        })
+      });
+
+      const data = await response.json();
+      typing.style.display = 'none';
+
+      if (data.status === 'success') {
+        const reply = data.reply;
+        appendSiPadangMsg('bot', reply);
+        
+        // Simpan percakapan ke riwayat lokal
+        sipadangHistory.push({ sender: 'user', message: text });
+        sipadangHistory.push({ sender: 'bot', message: reply });
+      } else {
+        appendSiPadangMsg('bot', 'Maaf Uda/Uni, SiPadang sedang terkendala sistem.');
+      }
+    } catch (err) {
+      typing.style.display = 'none';
+      appendSiPadangMsg('bot', 'Gagal terhubung ke backend. Pastikan server Node.js menyala.');
+      console.error(err);
+    }
+  }
+
+  function handleSiPadangKey(e) {
+    if (e.key === 'Enter') sendSiPadangMessage();
+  }
   </script>
 </body>
 </html>
